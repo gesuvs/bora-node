@@ -12,4 +12,11 @@ export default class EventosController {
         return response.badRequest(err);
       });
   }
+
+  public async findAll({response }: HttpContextContract) {
+    await EventosModel.all().then(res => {
+      return response.ok(res);
+    });
+  }
+
 }
