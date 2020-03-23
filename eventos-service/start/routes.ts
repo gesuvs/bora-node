@@ -24,4 +24,6 @@ Route.get('/', async () => {
   return { bora: 'api' };
 });
 
+Route.get('/eventos','EventosController.findAll')
+
 Route.post('/eventos', 'EventosController.create');
