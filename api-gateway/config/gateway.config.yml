@@ -1,0 +1,37 @@
+http:
+  port: 8080
+admin:
+  port: 9876
+  host: localhost
+apiEndpoints:
+  tenant-api:
+    host: localhost
+    #methods: ['GET','POST','PUT','DELETE']
+    paths: ['/','/eventos']
+  product-api:
+    host: localhost
+    paths: ['/']
+serviceEndpoints:
+  tenant-svc:
+    url: 'http://localhost:3333'
+  product-svc:
+    url: 'http://localhost:6000'
+policies:
+  - proxy
+pipelines:
+  tenant:
+    apiEndpoints:
+      - tenant-api
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: tenant-svc
+              changeOrigin: true
+  products:
+    apiEndpoints:
+      - product-api
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: product-svc
+              changeOrigin: true
