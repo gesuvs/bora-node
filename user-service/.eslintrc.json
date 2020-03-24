@@ -14,7 +14,7 @@
   },
   "plugins": ["prettier"],
   "rules": {
-    "new-cap":0,
+    "new-cap": 0,
     "prettier/prettier": "error",
     "require-jsdoc": [
       "error",
