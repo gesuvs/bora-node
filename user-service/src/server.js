@@ -8,6 +8,6 @@ const app = express();
 
 app.use(middlewares);
 app.use(routes);
-app.listen(process.env.PORT || 3000, () => {
+app.listen(process.env.PORT, () => {
   console.log(`Escutando na porta:  ${process.env.PORT} 🚀`);
 });
