@@ -17,9 +17,7 @@ export const create = async (req, res) => {
 export const findAllUsers = async (req, res) => {
   await User.findAll()
     .then(result => {
-      if (result === null) {
-        return res.sendStatus(204);
-      }
+      if (!result.length) return res.sendStatus(204);
       res.json(result);
     })
     .catch(() => res.sendStatus(404));
@@ -33,9 +31,7 @@ export const findByUsername = async (req, res) => {
     },
   })
     .then(result => {
-      if (result === null) {
-        return res.sendStatus(204);
-      }
+      if (!result) return res.sendStatus(204);
       res.json(result);
     })
     .catch(() => res.sendStatus(404));
