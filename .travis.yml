@@ -1,0 +1,8 @@
+Language: node_js
+node_js:
+  - 12.16.1
+
+install: true
+
+script:
+- npm test
