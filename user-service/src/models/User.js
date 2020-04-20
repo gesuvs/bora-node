@@ -1,4 +1,5 @@
 import { Model, DataTypes } from 'sequelize';
+import bcryptjs from 'bcryptjs';
 
 export default class User extends Model {
   static init(sequelize) {
@@ -6,7 +7,7 @@ export default class User extends Model {
       {
         name: DataTypes.STRING,
         username: DataTypes.STRING,
-        email: DataTypes.STRING,
+        mail: DataTypes.STRING,
         password: DataTypes.STRING,
       },
       {
@@ -14,8 +15,16 @@ export default class User extends Model {
         sequelize,
       }
     );
-    User.associations = ({ AuthToke }) => {
-      User.hasMany(AuthToke);
-    };
+    User.beforeCreate(
+      async user =>
+        await bcryptjs
+          .hash(user.password, 10)
+          .then(hash => {
+            user.password = hash;
+          })
+          .catch(err => {
+            throw new Error();
+          })
+    );
   }
 }
