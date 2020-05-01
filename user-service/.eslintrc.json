@@ -1,9 +1,12 @@
 {
   "env": {
     "es6": true,
-    "node": true
+    "node": true,
+    "jest": true,
+    "commonjs": false
   },
   "extends": ["google", "eslint:recommended", "prettier"],
+  "parser": "babel-eslint",
   "globals": {
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly"

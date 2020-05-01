@@ -1,30 +1,36 @@
-import { Model, DataTypes } from 'sequelize';
+import { Sequelize, Model, DataTypes } from 'sequelize';
 import bcryptjs from 'bcryptjs';
+import config from '../config/database';
+const sequelize = new Sequelize(config);
 
-export default class User extends Model {
-  static init(sequelize) {
-    super.init(
-      {
-        name: DataTypes.STRING,
-        username: DataTypes.STRING,
-        mail: DataTypes.STRING,
-        password: DataTypes.STRING,
-      },
-      {
-        tableName: 'tb_users',
-        sequelize,
-      }
-    );
-    User.beforeCreate(
-      async user =>
-        await bcryptjs
-          .hash(user.password, 10)
-          .then(hash => {
-            user.password = hash;
-          })
-          .catch(err => {
-            throw new Error();
-          })
-    );
+class User extends Model {}
+User.init(
+  {
+    id: {
+      primaryKey: true,
+      type: DataTypes.UUID,
+      defaultValue: Sequelize.UUIDV4,
+    },
+    name: DataTypes.STRING,
+    username: DataTypes.STRING,
+    mail: DataTypes.STRING,
+    password: DataTypes.STRING,
+  },
+  {
+    tableName: 'users',
+    sequelize,
   }
-}
+);
+User.beforeCreate(
+  async user =>
+    await bcryptjs
+      .hash(user.password, 10)
+      .then(hash => {
+        user.password = hash;
+      })
+      .catch(err => {
+        throw new Error();
+      })
+);
+
+export default User;

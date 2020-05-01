@@ -4,3 +4,4 @@ data
 .vscode
 *.key
 *.key.pub
+**/*.sqlite
