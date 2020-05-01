@@ -33,4 +33,11 @@ User.beforeCreate(
       })
 );
 
+User.beforeCreate(async user => {
+  const username = await user.username.toUpperCase();
+  const mail = await user.mail.toLowerCase();
+  user.username = username;
+  user.mail = mail;
+});
+
 export default User;

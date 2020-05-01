@@ -6,7 +6,7 @@ import {
   findUserByMail,
   login,
 } from '../controllers/UserController';
-import { validateToken } from '../config/server/verifyToken';
+import { validateToken } from '../middleware/verifyToken';
 
 export const routes = Router();
 

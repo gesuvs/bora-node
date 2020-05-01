@@ -1,5 +1,5 @@
 import { verify } from 'jsonwebtoken';
-import { publicKey } from '../../config/signature';
+import { publicKey } from '../config/signature';
 
 export const validateToken = async (req, res, next) => {
   verify(

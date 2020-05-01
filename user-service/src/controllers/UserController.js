@@ -5,6 +5,8 @@ import { privateKey } from '../config/signature';
 
 export const create = async (req, res) => {
   const { name, username, mail, password } = req.body;
+  if (!username || !mail || !password) res.sendStatus(400);
+
   await User.create({ name, username, mail, password })
     .then(() => {
       res.sendStatus(201);
