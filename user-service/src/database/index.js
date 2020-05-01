@@ -1,9 +1,9 @@
 import { Sequelize } from 'sequelize';
-import dbConfig from '../config/database';
-import User from '../models/User';
+import config from '../config/database';
+// import User from '../models/User';
 
-const connection = new Sequelize(dbConfig);
+const connection = new Sequelize(config);
 
-User.init(connection);
+// User.init(connection);
 
 export default connection;
