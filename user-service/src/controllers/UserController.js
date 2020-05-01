@@ -1,17 +1,15 @@
-import bcryptjs from 'bcryptjs';
+import { compareSync } from 'bcryptjs';
+import { sign } from 'jsonwebtoken';
 import User from '../models/User';
+import { privateKey } from '../config/signature';
 
 export const create = async (req, res) => {
-  const { name, username, email, password } = req.body;
-  bcryptjs.genSalt(10, (err, salt) => {
-    bcryptjs.hash(password, salt, async (err, hash) => {
-      await User.create({ name, username, email, password: hash })
-        .then(() => {
-          res.sendStatus(201);
-        })
-        .catch(err => res.send(err));
-    });
-  });
+  const { name, username, mail, password } = req.body;
+  await User.create({ name, username, mail, password })
+    .then(() => {
+      res.sendStatus(201);
+    })
+    .catch(err => res.status(500).send({ msg: err.name }));
 };
 
 export const findAllUsers = async (req, res) => {
@@ -20,7 +18,16 @@ export const findAllUsers = async (req, res) => {
       if (!result.length) return res.sendStatus(204);
       res.json(result);
     })
-    .catch(() => res.sendStatus(404));
+    .catch(() => res.sendStatus(500));
+};
+
+export const findUserByMail = async (req, res) => {
+  const { mail } = req.params;
+  await User.findOne({
+    where: {
+      mail,
+    },
+  }).then(result => res.json(result));
 };
 
 export const findByUsername = async (req, res) => {
@@ -34,14 +41,27 @@ export const findByUsername = async (req, res) => {
       if (!result) return res.sendStatus(204);
       res.json(result);
     })
-    .catch(() => res.sendStatus(404));
+    .catch(() => res.sendStatus(500));
 };
 
-// export const login = async (req, res) => {
-//   const { username, password } = req.body;
-//   User.authenticate = async (username, password) => {
-//     const user = await User.findOne({
-//       where: { username },
-//     });
-//   };
-// };
+export const login = async (req, res) => {
+  const { username, password } = req.body;
+  await User.findOne({ where: { username } })
+    .then(async result => {
+      if (!result) return res.sendStatus(204);
+      if (compareSync(password, result.password)) {
+        const token = sign(
+          { id: result.id, mail: result.mail },
+          await privateKey(),
+          {
+            expiresIn: '5m',
+            algorithm: 'RS256',
+          }
+        );
+        res.status(200).send({ token });
+      } else {
+        res.sendStatus(401);
+      }
+    })
+    .catch(() => res.sendStatus(500));
+};
