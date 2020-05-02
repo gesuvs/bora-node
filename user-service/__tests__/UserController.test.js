@@ -11,26 +11,28 @@ describe('User', () => {
     const user = {
       name: 'Guilherme Jesus',
       username: 'Jesus',
+      phone: '+5511983355797',
       mail: 'jesus@email.com',
-      password: 'senha-segura',
+      password: '#senha-Segura96',
     };
     const response = await request(app)
       .post('/users')
       .send(user);
     expect(response.status).toBe(201);
-  });
+  }, 30000);
 
   it('received status 400, missing required field username ', async () => {
     const user = {
       name: 'Guilherme Jesus',
       username: '',
+      phone: '+5511983355797',
       mail: 'jesus@email.com',
-      password: 'senha-segura',
+      password: '#senha-Segura96',
     };
 
     const response = await request(app)
       .post('/users')
       .send(user);
     expect(response.status).toBe(400);
-  });
+  }, 30000);
 });

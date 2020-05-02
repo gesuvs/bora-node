@@ -8,7 +8,7 @@ export const app = express();
 
 app.set(
   logger.log({
-    level: 'info' || 'error',
+    level: 'info',
     message: 'Started 🔺',
   })
 );

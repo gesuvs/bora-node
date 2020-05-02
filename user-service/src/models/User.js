@@ -2,6 +2,9 @@ import { Sequelize, Model, DataTypes } from 'sequelize';
 import bcryptjs from 'bcryptjs';
 import config from '../config/database';
 const sequelize = new Sequelize(config);
+const strongRegex = new RegExp(
+  '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})'
+);
 
 class User extends Model {}
 User.init(
@@ -11,9 +14,25 @@ User.init(
       type: DataTypes.UUID,
       defaultValue: Sequelize.UUIDV4,
     },
-    name: DataTypes.STRING,
+    name: {
+      type: DataTypes.STRING,
+      validate: {
+        is: [/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/],
+      },
+    },
+    mail: {
+      type: DataTypes.STRING,
+      validate: {
+        isEmail: true,
+      },
+    },
+    phone: {
+      type: DataTypes.STRING,
+      validate: {
+        min: 11,
+      },
+    },
     username: DataTypes.STRING,
-    mail: DataTypes.STRING,
     password: DataTypes.STRING,
   },
   {
@@ -21,8 +40,9 @@ User.init(
     sequelize,
   }
 );
-User.beforeCreate(
-  async user =>
+
+User.beforeCreate(async user => {
+  if (strongRegex.test(user.password)) {
     await bcryptjs
       .hash(user.password, 10)
       .then(hash => {
@@ -30,8 +50,11 @@ User.beforeCreate(
       })
       .catch(err => {
         throw new Error();
-      })
-);
+      });
+  } else {
+    throw new Error('password ');
+  }
+});
 
 User.beforeCreate(async user => {
   const username = await user.username.toUpperCase();

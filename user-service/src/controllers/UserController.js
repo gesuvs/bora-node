@@ -2,16 +2,28 @@ import { compareSync } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 import User from '../models/User';
 import { privateKey } from '../config/signature';
+import { logger } from '../logs';
 
 export const create = async (req, res) => {
-  const { name, username, mail, password } = req.body;
-  if (!username || !mail || !password) res.sendStatus(400);
+  const { name, phone, username, mail, password } = req.body;
+  if (!username || !mail || !password) return res.sendStatus(400);
 
-  await User.create({ name, username, mail, password })
+  await User.create({ name, phone, username, mail, password })
     .then(() => {
       res.sendStatus(201);
     })
-    .catch(err => res.status(500).send({ msg: err.name }));
+    .catch(err => {
+      logger.log({
+        level: 'error',
+        message: err.message,
+      });
+      res.status(400).send({
+        data: {
+          name: err.name,
+          description: err.message,
+        },
+      });
+    });
 };
 
 export const findAllUsers = async (req, res) => {
