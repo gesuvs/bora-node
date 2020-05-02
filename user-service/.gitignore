@@ -5,3 +5,5 @@ data
 *.key
 *.key.pub
 **/*.sqlite
+src/logs/*.log
+dist
