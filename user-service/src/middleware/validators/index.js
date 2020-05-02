@@ -19,7 +19,10 @@ export const validate = (req, res, next) => {
       [err.param]: err.msg,
     })
   );
-  return res.status(422).json({
+
+  console.log(req.body);
+
+  return res.status(405).json({
     errors: extractedErrors,
   });
 };

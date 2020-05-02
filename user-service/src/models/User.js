@@ -38,6 +38,13 @@ User.init(
   {
     tableName: 'users',
     sequelize,
+    scopes: {
+      withoutPassword: {
+        attributes: {
+          exclude: ['password'],
+        },
+      },
+    },
   }
 );
 
@@ -63,4 +70,10 @@ User.beforeCreate(async user => {
   user.mail = mail;
 });
 
+User.beforeFind(async user => {
+  if (user.where) {
+    const userUpperCase = await user.where.username.toUpperCase();
+    user.where.username = userUpperCase;
+  }
+});
 export default User;

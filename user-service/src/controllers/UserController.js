@@ -27,12 +27,17 @@ export const create = async (req, res) => {
 };
 
 export const findAllUsers = async (req, res) => {
-  await User.findAll()
+  await User.scope('withoutPassword')
+    .findAll()
     .then(result => {
       if (!result.length) return res.sendStatus(204);
       res.json(result);
     })
-    .catch(() => res.sendStatus(500));
+    .catch(() => {
+      console.log(res);
+      res.sendStatus(500);
+    });
+  // .catch(() => res.sendStatus(500));
 };
 
 export const findUserByMail = async (req, res) => {
@@ -60,6 +65,7 @@ export const findByUsername = async (req, res) => {
 
 export const login = async (req, res) => {
   const { username, password } = req.body;
+
   await User.findOne({ where: { username } })
     .then(async result => {
       if (!result) return res.sendStatus(204);
@@ -68,7 +74,7 @@ export const login = async (req, res) => {
           { id: result.id, mail: result.mail },
           await privateKey(),
           {
-            expiresIn: '5m',
+            expiresIn: '10m',
             algorithm: 'RS256',
           }
         );
