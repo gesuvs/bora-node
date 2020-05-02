@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">28.57% </span>
+                <span class="strong">27.78% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>10/35</span>
+                <span class='fraction'>10/36</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">29.03% </span>
+                <span class="strong">28.13% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>9/31</span>
+                <span class='fraction'>9/32</span>
             </div>
         
             
@@ -138,7 +138,13 @@
 <a name='L79'></a><a href='#L79'>79</a>
 <a name='L80'></a><a href='#L80'>80</a>
 <a name='L81'></a><a href='#L81'>81</a>
-<a name='L82'></a><a href='#L82'>82</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a>
+<a name='L88'></a><a href='#L88'>88</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -169,10 +175,15 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -200,6 +211,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -248,12 +260,17 @@ export const create = async (req, res) =&gt; {
 };
 &nbsp;
 export const findAllUsers = <span class="fstat-no" title="function not covered" >as</span>ync (req, res) =&gt; {
-<span class="cstat-no" title="statement not covered" >  await User.findAll()</span>
+<span class="cstat-no" title="statement not covered" >  await User.scope('withoutPassword')</span>
+    .findAll()
     .then(<span class="fstat-no" title="function not covered" >re</span>sult =&gt; {
 <span class="cstat-no" title="statement not covered" >      if (!result.length) <span class="cstat-no" title="statement not covered" >return res.sendStatus(204);</span></span>
 <span class="cstat-no" title="statement not covered" >      res.json(result);</span>
     })
-    .catch(<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >res.sendStatus(500))</span>;
+    .catch(<span class="fstat-no" title="function not covered" >()</span> =&gt; {
+<span class="cstat-no" title="statement not covered" >      console.log(res);</span>
+<span class="cstat-no" title="statement not covered" >      res.sendStatus(500);</span>
+    });
+  // .catch(() =&gt; res.sendStatus(500));
 };
 &nbsp;
 export const findUserByMail = <span class="fstat-no" title="function not covered" >as</span>ync (req, res) =&gt; {
@@ -281,6 +298,7 @@ export const findByUsername = <span class="fstat-no" title="function not covered
 &nbsp;
 export const login = <span class="fstat-no" title="function not covered" >as</span>ync (req, res) =&gt; {
   const { username, password } = <span class="cstat-no" title="statement not covered" >req.body;</span>
+&nbsp;
 <span class="cstat-no" title="statement not covered" >  await User.findOne({ where: { username } })</span>
     .then(<span class="fstat-no" title="function not covered" >as</span>ync result =&gt; {
 <span class="cstat-no" title="statement not covered" >      if (!result) <span class="cstat-no" title="statement not covered" >return res.sendStatus(204);</span></span>
@@ -289,7 +307,7 @@ export const login = <span class="fstat-no" title="function not covered" >as</sp
           { id: result.id, mail: result.mail },
           await privateKey(),
           {
-            expiresIn: '5m',
+            expiresIn: '10m',
             algorithm: 'RS256',
           }
         );
@@ -307,7 +325,7 @@ export const login = <span class="fstat-no" title="function not covered" >as</sp
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Sat May 02 2020 06:57:55 GMT-0300 (Brasilia Standard Time)
+                at Sat May 02 2020 20:42:25 GMT-0300 (Brasilia Standard Time)
             </div>
         </div>
         <script src="../../prettify.js"></script>
