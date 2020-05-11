@@ -2,4 +2,5 @@ before_install: openssl aes-256-cbc -K $encrypted_cd813bb64b7a_key -iv $encrypte
 addons:
     ssh_known_hosts: ec2-18-206-223-123.compute-1.amazonaws.com
 script:
+  - chmod 400 ec2-teste.pem
   - ssh -i "ec2-teste.pem" ec2-user@ec2-18-206-223-123.compute-1.amazonaws.com
