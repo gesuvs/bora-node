@@ -17,8 +17,11 @@ mongoose.connect(process.env.MONGO_URL, {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
-app.use('/files',express.static(path.resolve(__dirname,'..','tmp','uploads')))
-app.use(routes);
+app.use(
+  "/files",
+  express.static(path.resolve(__dirname, "..", "tmp", "uploads"))
+);
+app.use("/upload", routes);
 
 app.listen(process.env.APP_PORT, () => {
   console.log(`Run: ${process.env.APP_PORT}`);

@@ -1,5 +1,5 @@
 http:
-  port: 8080
+  port: 7000
 admin:
   port: 9876
   host: localhost
@@ -7,15 +7,15 @@ apiEndpoints:
   tenant-api:
     host: localhost
     #methods: ['GET','POST','PUT','DELETE']
-    paths: ['/','/eventos']
+    paths: ["/upload/*"]
   product-api:
     host: localhost
-    paths: ['/']
+    paths: ["/users/*"]
 serviceEndpoints:
   tenant-svc:
-    url: 'http://localhost:3333'
+    url: "http://localhost:5000"
   product-svc:
-    url: 'http://localhost:6000'
+    url: "http://localhost:3333"
 policies:
   - proxy
 pipelines:

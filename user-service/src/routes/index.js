@@ -12,8 +12,8 @@ import { userValidationRules, validate } from '../middleware/validators';
 
 export const routes = Router();
 
-routes.post('/users', userValidationRules(), validate, create);
-routes.get('/users', validateToken, findAllUsers);
-routes.get('/users/:username', validateToken, findByUsername);
-routes.get('/users/mail/:mail', validateToken, findUserByMail);
+routes.post('/', userValidationRules(), validate, create);
+routes.get('/', validateToken, findAllUsers);
+routes.get('/:username', validateToken, findByUsername);
+routes.get('/mail/:mail', validateToken, findUserByMail);
 routes.post('/auth', login);

@@ -15,5 +15,5 @@ app.set(
 );
 
 app.use(configServerApp);
-app.use(routes);
+app.use('/users', routes);
 app.use(swagger);

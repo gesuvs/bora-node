@@ -7,9 +7,9 @@ networks:
 
 configs:
   traefik_toml_v2:
-    file: ./traefik.toml
+    file: ./config/traefik.toml
   nginx_conf:
-    file: ./nginx-redirect.conf
+    file: ./config/nginx-redirect.conf
 
 secrets:
   traefik_cert:
