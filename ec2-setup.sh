@@ -1,2 +1,1 @@
-eval $(docker-machine env master)
-docker node ls
+docker-machine ssh aws -F ./ec2-s.sh
