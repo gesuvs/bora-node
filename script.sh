@@ -1,6 +1,23 @@
-FILE=".travis.yml"
-if [ -e "$FILE" ]; then
-  return
+#DIR="./bora-node"
+DIR="./bora-node"
+pull() {
+  cd $DIR
+  git pull
+}
+
+clone(){
+  git clone https://github.com/GBernardo10/bora-node
+}
+
+if [ -d "$DIR" ]; then
+  pull
 else
-  wget https://raw.githubusercontent.com/vmware-archive/docker-machine-driver-vmwareappcatalyst/master/.travis.yml
+  clone
 fi
+
+start(){
+  cd $DIR
+  ls
+}
+
+start
