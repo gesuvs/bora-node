@@ -52,7 +52,7 @@ arquivo() {
     if [[ -z $(grep '[^[:space:]]' $FILE) ]]; then
       echo "Empty file"
       rm $FILE
-      exit 0
+      rmlogpush
     fi
   else
     echo n existe
