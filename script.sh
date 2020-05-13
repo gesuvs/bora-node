@@ -41,7 +41,7 @@ arquivo() {
       git add .log
       git commit -m "deploy: rm log"
       git push -u origin feature/lerna
-      exit 1
+      exit 0
     fi
   else
     echo n existe
