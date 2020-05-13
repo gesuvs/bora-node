@@ -18,7 +18,7 @@ script:
 after_success:
   - git config --global user.email "g_bernardo10@hotmail.com"
   - git config --global user.name "GBernardo10"
-  -  git checkout feature/lerna
+  - git checkout feature/lerna
   - git add .log
   - "git commit -m 'deploy: rm log'"
   - git remote rm origin
