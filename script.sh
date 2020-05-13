@@ -19,7 +19,26 @@ status() {
       fi
     done
   done
+
   echo "${NEWARR[@]}" >.log
+
+  for l in "${ARRAYDIR[@]}"; do
+    if grep -r $l .log; then
+      exit 0
+    elif [ -f ".log" ]; then
+      rm .log
+      exit 0
+    fi
+  done
+}
+
+arquivo() {
+  if [ -f ".log" ]; then
+    echo existe
+  else
+    echo n existe
+    exit 1
+  fi
 }
 
 while test $# -gt 0; do
@@ -29,7 +48,7 @@ while test $# -gt 0; do
     exit 0
     ;;
   -prod)
-    echo d
+    arquivo
     exit 0
     ;;
   *)
@@ -79,7 +98,6 @@ traefik() {
     exit 1
   fi
 }
-
 
 ssh() {
   certdir="tls"
