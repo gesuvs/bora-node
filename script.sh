@@ -37,6 +37,7 @@ arquivo() {
   if [ -f $FILE ]; then
     if [[ -z $(grep '[^[:space:]]' $FILE) ]]; then
       echo "Empty file"
+      exit 1
     fi
   else
     echo n existe
