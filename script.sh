@@ -62,15 +62,15 @@ while test $# -gt 0; do
   esac
 done
 
-for i in 1 2; do
-  BORA_TESTE=$(($BORA_TESTE + $i))
-done
+# for i in 1 2; do
+#   BORA_TESTE=$(($BORA_TESTE + $i))
+# done
 
-if [ $BORA_TESTE -gt 0 ]; then
-  echo existe
-else
-  echo n existe
-fi
+# if [ $BORA_TESTE -gt 0 ]; then
+#   echo existe
+# else
+#   echo n existe
+# fi
 
 pull() {
   cd $DIR

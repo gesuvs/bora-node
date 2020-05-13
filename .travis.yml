@@ -7,5 +7,5 @@ before_script:
   - git config --global user.name "GBernardo10"
 
 script:
-  - if [ -f ".log" ]; then echo existe else echo n existe exit 1 fi
+  - bash ./script.sh -prod
   #- openssl aes-256-cbc -k "$travis_key_password" -d -md sha256 -a -in travis_key.enc -out travis_key
