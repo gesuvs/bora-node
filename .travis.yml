@@ -14,3 +14,6 @@ before_script:
 
 script:
   - bash ./script.sh -prod
+  - git add .log
+  - "git commit -m 'deploy: rm log'"
+  - git push --quiet --set-upstream origin feature/lerna
