@@ -4,6 +4,7 @@ EVENTOS="./eventos-service"
 API_GATEWAY="./api-gateway"
 UPLOAD="./upload-service"
 USER="./user-service"
+FILE=.log
 ARRAYDIR=($EVENTOS $API_GATEWAY $UPLOAD $USER)
 NEWARR=()
 
@@ -33,8 +34,10 @@ status() {
 }
 
 arquivo() {
-  if [ -f ".log" ]; then
-    echo existe
+  if [ -f $FILE ]; then
+    if [[ -z $(grep '[^[:space:]]' $FILE) ]]; then
+      echo "Empty file"
+    fi
   else
     echo n existe
     exit 1
