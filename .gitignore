@@ -1,2 +1,3 @@
 .vscode
-tls/*
+tls/*.pem
+tls/*.srl

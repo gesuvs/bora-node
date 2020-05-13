@@ -80,7 +80,6 @@ traefik() {
   fi
 }
 
-start
 
 ssh() {
   certdir="tls"
