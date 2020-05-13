@@ -13,7 +13,6 @@ script:
 after_success:
   - git config --global user.email "g_bernardo10@hotmail.com"
   - git config --global user.name "GBernardo10"
-  - git remote rm origin
   - echo "Host github.com" > ~/.ssh/config
   - echo "  IdentityFile  $(pwd)/travis_key" >> ~/.ssh/config
   - chmod 400 travis_key
