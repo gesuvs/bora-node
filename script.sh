@@ -37,6 +37,10 @@ arquivo() {
   if [ -f $FILE ]; then
     if [[ -z $(grep '[^[:space:]]' $FILE) ]]; then
       echo "Empty file"
+      rm $FILE
+      git add .log
+      git commit -m "deploy: rm log"
+      git push -u origin feature/lerna
       exit 1
     fi
   else
