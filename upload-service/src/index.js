@@ -1,6 +1,7 @@
 require("dotenv").config({
   path: process.env.NODE_ENV === "dev" ? ".env.dev" : ".env",
 });
+
 const express = require("express");
 const morgan = require("morgan");
 const routes = require("./routes");
