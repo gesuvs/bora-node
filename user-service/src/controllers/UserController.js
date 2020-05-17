@@ -5,7 +5,10 @@ import { privateKey } from '../config/signature';
 import { logger } from '../logs';
 
 export const create = async (req, res) => {
-  const { name, phone, username, mail, password } = req.body;
+  console.log(req.body);
+  const {
+    user: { name, phone, username, mail, password },
+  } = req.body;
   if (!username || !mail || !password) return res.sendStatus(400);
 
   await User.create({ name, phone, username, mail, password })

@@ -1,10 +1,10 @@
 import { body, validationResult } from 'express-validator';
 
 export const userValidationRules = () => [
-  body('mail').isEmail(),
-  body('password').isLength({ min: 8, max: 15 }),
-  body('name').matches(/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/),
-  body('phone').isMobilePhone('pt-BR'),
+  body('user.mail').isEmail(),
+  body('user.password').isLength({ min: 8, max: 15 }),
+  body('user.name').matches(/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/),
+  body('user.phone').isMobilePhone('pt-BR'),
 ];
 
 export const validate = (req, res, next) => {
