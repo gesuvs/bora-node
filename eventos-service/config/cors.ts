@@ -5,9 +5,9 @@
  * file.
  */
 
-import { CorsConfigContract } from '@ioc:Adonis/Core/Cors'
+import { CorsConfig } from '@ioc:Adonis/Core/Cors';
 
-const corsConfig: CorsConfigContract = {
+const corsConfig: CorsConfig = {
   /*
   |--------------------------------------------------------------------------
   | Enabled
@@ -128,6 +128,6 @@ const corsConfig: CorsConfigContract = {
   |
   */
   maxAge: 90,
-}
+};
 
-export default corsConfig
+export default corsConfig;

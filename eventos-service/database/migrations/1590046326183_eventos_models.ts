@@ -4,7 +4,8 @@ export default class EventosModels extends BaseSchema {
   protected $tableName = 'eventos_models';
 
   public async up() {
-    this.schema.createTable(this.$tableName, (table) => {
+    await this.db.rawQuery('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";');
+    this.schema.createTable(this.$tableName, async table => {
       table.uuid('id').primary();
       table.string('name').notNullable();
       table.string('owner').notNullable();
@@ -16,7 +17,7 @@ export default class EventosModels extends BaseSchema {
           'only friends of friends',
         ])
         .defaultTo('public');
-      table.boolean('isPublic');
+      table.boolean('is_public').defaultTo(true);
       table.string('password');
       table.date('start_day').notNullable();
       table.date('start_end').notNullable();

@@ -5,14 +5,14 @@
  * file.
  */
 
-import proxyAddr from 'proxy-addr'
-import Env from '@ioc:Adonis/Core/Env'
-import { LoggerConfigContract } from '@ioc:Adonis/Core/Logger'
-import { RequestConfigContract } from '@ioc:Adonis/Core/Request'
-import { ResponseConfigContract } from '@ioc:Adonis/Core/Response'
-import { ProfilerConfigContract } from '@ioc:Adonis/Core/Profiler'
+import proxyAddr from 'proxy-addr';
+import Env from '@ioc:Adonis/Core/Env';
+import { LoggerConfig } from '@ioc:Adonis/Core/Logger';
+import { RequestConfig } from '@ioc:Adonis/Core/Request';
+import { ResponseConfig } from '@ioc:Adonis/Core/Response';
+import { ProfilerConfig } from '@ioc:Adonis/Core/Profiler';
 
-type HttpOptions = RequestConfigContract & ResponseConfigContract
+type HttpOptions = RequestConfig & ResponseConfig;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +26,7 @@ type HttpOptions = RequestConfigContract & ResponseConfigContract
 | data loss.
 |
 */
-export const appKey: string = Env.getOrFail('APP_KEY') as string
+export const appKey: string = Env.getOrFail('APP_KEY') as string;
 
 /*
 |--------------------------------------------------------------------------
@@ -128,14 +128,14 @@ export const http: HttpOptions = {
   |
   */
   forceContentNegotiationToJSON: true,
-}
+};
 
 /*
 |--------------------------------------------------------------------------
 | Logger
 |--------------------------------------------------------------------------
 */
-export const logger: LoggerConfigContract = {
+export const logger: LoggerConfig = {
   /*
   |--------------------------------------------------------------------------
   | Application name
@@ -182,14 +182,14 @@ export const logger: LoggerConfigContract = {
   |
   */
   prettyPrint: Env.get('NODE_ENV') === 'development',
-}
+};
 
 /*
 |--------------------------------------------------------------------------
 | Profiler
 |--------------------------------------------------------------------------
 */
-export const profiler: ProfilerConfigContract = {
+export const profiler: ProfilerConfig = {
   /*
   |--------------------------------------------------------------------------
   | Toggle profiler
@@ -221,4 +221,4 @@ export const profiler: ProfilerConfigContract = {
   |
   */
   whitelist: [],
-}
+};

@@ -24,6 +24,14 @@ Route.get('/', async () => {
   return { bora: 'bora api' };
 });
 
-Route.get('/eventos','EventosController.findAll')
+Route.get('/eventos', 'EventosController.findAll');
 
-Route.post('/eventos', 'EventosController.create');
+Route.post('/eventos', 'EventosController.create').middleware('auth');
+
+Route.post(
+  '/eventos/:id/participar',
+  'EventosController.participar'
+).middleware('auth');
+
+Route.post('/teste', 'EventosController.validator').middleware('auth');
+//Route.post('/teste', 'EventosController.validator');

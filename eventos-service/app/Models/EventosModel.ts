@@ -1,9 +1,16 @@
 import { DateTime } from 'luxon';
-import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm';
+import {
+  BaseModel,
+  column,
+  beforeSave,
+  beforeCreate,
+} from '@ioc:Adonis/Lucid/Orm';
+import { v4 as uuidv4 } from 'uuid';
+import Hash from '@ioc:Adonis/Core/Hash';
 
 export default class EventosModel extends BaseModel {
   @column({ isPrimary: true })
-  public id: number;
+  public id: string;
 
   @column()
   public name: string;
@@ -37,4 +44,15 @@ export default class EventosModel extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime;
+
+  @beforeSave()
+  public static async hashPaswword(evento: EventosModel) {
+    if (evento.$dirty.password)
+      evento.password = await Hash.make(evento.password);
+  }
+
+  @beforeCreate()
+  public static async uuidId(evento: EventosModel) {
+    evento.id = uuidv4();
+  }
 }
