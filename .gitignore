@@ -1,3 +1,5 @@
 .vscode
 tls/*.pem
 tls/*.srl
+tls/*.key
+tls/*.key.pub
