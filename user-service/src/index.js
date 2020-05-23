@@ -1,8 +1,5 @@
-import { config } from 'dotenv';
 import { app } from './server';
 
-config({
-  path: process.env.NODE_ENV === 'test' ? '.env.test' : '.env',
+app.listen(process.env.PORT, process.env.HOST, () => {
+  console.log(process.env.PORT, process.env.HOST);
 });
-
-app.listen(process.env.PORT);

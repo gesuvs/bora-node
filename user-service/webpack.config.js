@@ -1,14 +1,16 @@
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
-  mode: 'none',
+  mode: 'production',
   entry: ['babel-polyfill', './src/index.js'],
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'main.js',
     libraryTarget: 'umd',
   },
+  plugins: [new Dotenv()],
   module: {
     rules: [
       {

@@ -34,11 +34,11 @@ export const findAllUsers = async (req, res) => {
     .findAll()
     .then(result => {
       if (!result.length) return res.sendStatus(204);
-      res.json(result);
+      return res.json(result);
     })
-    .catch(() => {
-      console.log(res);
-      res.sendStatus(500);
+    .catch(err => {
+      console.log(err);
+      return res.json(err);
     });
   // .catch(() => res.sendStatus(500));
 };
@@ -67,7 +67,9 @@ export const findByUsername = async (req, res) => {
 };
 
 export const login = async (req, res) => {
-  const { username, password } = req.body;
+  const {
+    user: { username, password },
+  } = req.body;
 
   await User.findOne({ where: { username } })
     .then(async result => {

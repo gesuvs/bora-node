@@ -5,9 +5,13 @@
   "license": "MIT",
   "scripts": {
     "lint": "eslint ./src --fix",
-    "dev": "nodemon --exec sucrase-node ./src/index.js --ignore __tests__",
+    "dev": "cross-env NODE_ENV=dev nodemon --exec sucrase-node ./src/index.js --ignore __tests__",
     "build": "webpack",
     "start": "node ./dist/main.js",
+    "migrate": "sequelize-cli db:migrate",
+    "migrate:undo": "sequelize-cli db:migrate:undo",
+    "migrate:dev": "sequelize-cli db:migrate",
+    "migrate:dev:undo": "sequelize-cli db:migrate:undo",
     "pretest": "cross-env NODE_ENV=test sequelize db:migrate",
     "test": "cross-env NODE_ENV=test jest --coverage",
     "posttest": "cross-env NODE_ENV=test sequelize db:migrate:undo:all"
@@ -18,6 +22,7 @@
     "cors": "^2.8.5",
     "date-fns": "^2.12.0",
     "dotenv": "^8.2.0",
+    "dotenv-webpack": "^1.8.0",
     "express": "^4.17.1",
     "express-validator": "^6.4.1",
     "jsonwebtoken": "^8.5.1",

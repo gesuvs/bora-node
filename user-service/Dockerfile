@@ -1,7 +1,16 @@
-FROM node:10.13-alpine
-ENV NODE_ENV production
-RUN mkdir -p /usr/src
-WORKDIR /usr/src
-COPY dist/main.js .
-EXPOSE 3000
-CMD node main.js
+FROM node:12.16.1-alpine
+
+WORKDIR /usr/src/app
+
+COPY ["package.json","./"]
+
+RUN apk update && apk upgrade && \
+  apk add --no-cache bash git openssh && \
+  yarn && yarn global add pm2 && yarn cache clean && \
+  apk del git openssh
+
+COPY . .
+
+EXPOSE 3333
+
+CMD ["pm2-runtime", "dist/main.js"]

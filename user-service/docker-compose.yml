@@ -1,32 +1,25 @@
 version: "3"
 
 services:
-  teste-postgres-compose:
+  postgres:
     image: postgres:11
+    container_name: pg
+    restart: always
     environment:
-      POSTGRES_HOST: ${POSTGRES_HOST}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DBNAME}
+      POSTGRES_DB: ${POSTGRES_DB}
     ports:
-      - "15432:5432"
+      - 5432:5432
     volumes:
       - /var/lib/postgresql/data
-    networks:
-      - postgres-compose-network
-
-  teste-pgadmin-compose:
-    image: dpage/pgadmin4
-    environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
-      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
-    ports:
-      - "16543:80"
+  app:
+    # image: node:12.16.1-alpine
+    build: .
+    container_name: user-service
+    restart: always
     depends_on:
-      - teste-postgres-compose
-    networks:
-      - postgres-compose-network
-
-networks:
-  postgres-compose-network:
-    driver: bridge
+      - postgres
+    ports:
+      - ${PORT}:${PORT}
+    entrypoint: ["/bin/bash", "./entrypoint.sh"]
