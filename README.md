@@ -15,7 +15,7 @@
 ## Configurando Ambiente
 
 ```bash
-git clone [https://github.com/GBernardo10/bora-node](https://github.com/GBernardo10/bora-node)
+git clone https://github.com/GBernardo10/bora-node
 ```
 
 ```bash
@@ -57,9 +57,9 @@ token://<TOKEN> node2
 Acesse elas com o comando:
 
 - docker-machine env node1
-    - eval $(docker-machine env node1)
+  - eval \$(docker-machine env node1)
 - docker-machine env node2
-    - eval $(docker-machine env node2)
+  - eval \$(docker-machine env node2)
 
 Em cada uma delas cole o comando :
 
@@ -121,7 +121,7 @@ Passo a passo:
 Rode o script com o comando abaixo:
 
 ```bash
-bash ./script.sh
+bash ./script.sh -ssh
 ```
 
 Esse passo acima, so precisa ser feito uma unica vez, com ele, vai ser criado as chaves publica e privada, juntamente com o certificado digital para usar com o serviço Traefik, para usar https.
