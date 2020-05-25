@@ -8,3 +8,5 @@ data
 src/logs/*.log
 dist
 .env.dev
+.env.prod
+.ssh

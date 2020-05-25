@@ -14,13 +14,13 @@ config({
       ? '.env.test'
       : '.env',
 });
-console.log(process.env.NODE_ENV);
+
 export const app = express();
 
 app.set(
   logger.log({
     level: 'info',
-    message: `Started 🔺 on ${process.env.HOST}:${process.env.PORT} || ${process.env.POSTGRES_HOST}`,
+    message: `Started 🔺 on ${process.env.HOST}:${process.env.USER_PORT} || ${process.env.POSTGRES_HOST}`,
   })
 );
 

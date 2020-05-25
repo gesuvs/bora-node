@@ -37,10 +37,9 @@ export const findAllUsers = async (req, res) => {
       return res.json(result);
     })
     .catch(err => {
-      console.log(err);
-      return res.json(err);
+      // return res.json(err);
+      return res.sendStatus(500);
     });
-  // .catch(() => res.sendStatus(500));
 };
 
 export const findUserByMail = async (req, res) => {
@@ -79,7 +78,7 @@ export const login = async (req, res) => {
           { id: result.id, mail: result.mail },
           await privateKey(),
           {
-            expiresIn: '10m',
+            expiresIn: '60m',
             algorithm: 'RS256',
           }
         );

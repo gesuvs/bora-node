@@ -1,7 +1,6 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
 import { verify } from 'jsonwebtoken';
-import { privateKey, publicKey } from 'App/config/signature';
-import path from 'path';
+import { publicKey } from 'App/config/signature';
 
 export default class Auth {
   public async handle(

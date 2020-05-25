@@ -1,5 +1,3 @@
 import { app } from './server';
 
-app.listen(process.env.PORT, process.env.HOST, () => {
-  console.log(process.env.PORT, process.env.HOST);
-});
+app.listen(process.env.USER_PORT, process.env.HOST);

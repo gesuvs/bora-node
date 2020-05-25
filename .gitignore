@@ -3,3 +3,4 @@ tls/*.pem
 tls/*.srl
 tls/*.key
 tls/*.key.pub
+.env.prod

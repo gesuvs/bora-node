@@ -60,22 +60,6 @@ arquivo() {
   fi
 }
 
-while test $# -gt 0; do
-  case "$1" in
-  -dev)
-    status
-    exit 0
-    ;;
-  -prod)
-    arquivo
-    exit 0
-    ;;
-  *)
-    echo "$1 is not a recognized flag!"
-    exit 1
-    ;;
-  esac
-done
 
 # for i in 1 2; do
 #   BORA_TESTE=$(($BORA_TESTE + $i))
@@ -119,6 +103,7 @@ traefik() {
 }
 
 ssh() {
+  echo foi
   certdir="tls"
   host="localhost"
 
@@ -154,3 +139,24 @@ ssh() {
   fi
 
 }
+
+while test $# -gt 0; do
+  case "$1" in
+  -dev)
+    status
+    exit 0
+    ;;
+  -prod)
+    arquivo
+    exit 0
+    ;;
+  -ssh)
+    ssh
+    exit 0
+    ;;
+  *)
+    echo "$1 is not a recognized flag!"
+    exit 1
+    ;;
+  esac
+done

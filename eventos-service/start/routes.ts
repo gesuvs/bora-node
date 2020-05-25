@@ -32,6 +32,3 @@ Route.post(
   '/eventos/:id/participar',
   'EventosController.participar'
 ).middleware('auth');
-
-Route.post('/teste', 'EventosController.validator').middleware('auth');
-//Route.post('/teste', 'EventosController.validator');

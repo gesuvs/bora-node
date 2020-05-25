@@ -1,11 +1,9 @@
 FROM node:12.16.1-alpine
 
-#ENV NODE_ENV production
-
 WORKDIR /usr/src/app
 
 
-COPY ["package.json","./"]
+COPY ["package.json","entrypoint.sh","./"]
 
 RUN apk update && apk upgrade && \
   apk add --no-cache bash git openssh && \
@@ -14,6 +12,6 @@ RUN apk update && apk upgrade && \
 
 COPY build .
 
-EXPOSE 4000
+EXPOSE 5555
 
 CMD ["pm2-runtime", "server.js"]

@@ -1,22 +1,8 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
 import EventosModel from 'App/Models/EventosModel';
 import EventoParticipantesModel from 'App/Models/EventoParticipantesModel';
-import { rules } from '@ioc:Adonis/Core/Validator';
 
 export default class EventosController {
-  public async validator({ request, response }: HttpContextContract) {
-    response.ok({ msg: 'ok' });
-
-    // const rules = {
-    //   email: 'required|email|',
-    //   password: 'required',
-    // };
-    // const { email } = request.all();
-    // const validation = rules.email().name;
-    // validation.
-    // console.log(validation);
-  }
-
   public async create({
     request,
     response,
@@ -95,9 +81,5 @@ export default class EventosController {
     } catch (error) {
       return response.badGateway(error);
     }
-  }
-
-  public async teste({ request }: HttpContextContract) {
-    console.log(request.headers().authorization);
   }
 }

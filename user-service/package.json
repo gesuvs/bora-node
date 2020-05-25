@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "eslint ./src --fix",
     "dev": "cross-env NODE_ENV=dev nodemon --exec sucrase-node ./src/index.js --ignore __tests__",
-    "build": "webpack",
+    "build": "rm -rf dist && webpack",
     "start": "node ./dist/main.js",
     "migrate": "sequelize-cli db:migrate",
     "migrate:undo": "sequelize-cli db:migrate:undo",

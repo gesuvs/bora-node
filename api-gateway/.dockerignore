@@ -1,9 +1,7 @@
 **/.classpath
 **/.dockerignore
+**/.env
 **/.git
-.env.*
-.env
-__tests__
 **/.gitignore
 **/.project
 **/.settings
@@ -23,6 +21,3 @@ __tests__
 **/secrets.dev.yaml
 **/values.dev.yaml
 README.md
-.prettierrc
-.eslintrc.json
-jest.config.js

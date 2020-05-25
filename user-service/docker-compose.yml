@@ -14,12 +14,11 @@ services:
     volumes:
       - /var/lib/postgresql/data
   app:
-    # image: node:12.16.1-alpine
     build: .
     container_name: user-service
     restart: always
     depends_on:
       - postgres
     ports:
-      - ${PORT}:${PORT}
+      - ${USER_PORT}:${USER_PORT}
     entrypoint: ["/bin/bash", "./entrypoint.sh"]
