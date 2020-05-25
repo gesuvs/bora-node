@@ -1,4 +1,0 @@
-docker swarm join --token SWMTKN-1-6a489od49dvx8w0cgzlgxrtl4zuea9uo6uhzxnai4d58t97hsw-0j87b3lsgbz07dmf2y2q47hsn 192.168.99.107:2377
-
-
-docker-machine create -d virtualbox --swarm --swarm-discovery token://-1-6a489od49dvx8w0cgzlgxrtl4zuea9uo6uhzxnai4d58t97hsw-0j87b3lsgbz07dmf2y2q47hsn node1
