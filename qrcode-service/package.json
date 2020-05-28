@@ -1,0 +1,28 @@
+{
+  "name": "qrcode-service",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "ts-node-dev --respawn --transpileOnly src/index.ts"
+  },
+  "dependencies": {
+    "@marblejs/core": "^3.1.2",
+    "@marblejs/middleware-body": "^3.1.2",
+    "@marblejs/middleware-io": "^3.1.2",
+    "@marblejs/middleware-jwt": "^3.1.2",
+    "@marblejs/middleware-logger": "^3.1.2",
+    "dotenv": "^8.2.0",
+    "fp-ts": "^2.6.2",
+    "pg": "^8.2.1",
+    "qrcode": "^1.4.4",
+    "reflect-metadata": "^0.1.13",
+    "rxjs": "^6.5.5",
+    "typeorm": "^0.2.25"
+  },
+  "devDependencies": {
+    "@types/node": "^14.0.5",
+    "ts-node-dev": "^1.0.0-pre.44",
+    "typescript": "^3.9.3"
+  }
+}
