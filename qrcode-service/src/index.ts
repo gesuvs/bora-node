@@ -1,7 +1,9 @@
+import "reflect-metadata";
 import "dotenv/config";
 import { createServer } from "@marblejs/core";
-import { listener } from "./config/http.listener";
 import { IO } from "fp-ts/lib/IO";
+import { listener } from "./config/http.listener";
+import { createConnection } from "typeorm";
 
 const server = createServer({
   port: Number(process.env.PORT),
@@ -10,4 +12,7 @@ const server = createServer({
 });
 
 const main: IO<void> = async () => await (await server)();
-main();
+createConnection().then(async (conn) => {
+  console.log("conectado");
+  main();
+});
