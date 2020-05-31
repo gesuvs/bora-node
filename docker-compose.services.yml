@@ -42,7 +42,7 @@ services:
     networks:
       - proxy
     depends_on:
-      - postgres
+      # - postgres
       - gateway
     environment:
       HOST: ${HOST}
@@ -56,12 +56,31 @@ services:
       - ${USER_PORT}:${USER_PORT}
     command: >
       sh -c "yarn migrate && pm2-runtime dist/main.js"
+  bora-pagamentos:
+    image: gesuvs/pagamentos
+      networks:
+        - proxy
+      depends_on:
+        # - postgres
+        - gateway
+      environment:
+        HOST: ${HOST}
+        USER_PORT: ${USER_PORT}
+        POSTGRES_HOST: ${POSTGRES_HOST}
+        POSTGRES_PORT: ${POSTGRES_PORT}
+        POSTGRES_USER: ${POSTGRES_USER}
+        POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+        POSTGRES_DB: ${POSTGRES_DB}
+      ports:
+        - ${USER_PORT}:${USER_PORT}
+      command: >
+        sh -c "yarn migrate && pm2-runtime dist/main.js"
   bora-evento:
     image: gesuvs/eventos
     networks:
       - proxy
     depends_on:
-      - postgres
+      # - postgres
       - gateway
     environment:
       HOST: ${HOST}
