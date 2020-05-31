@@ -58,8 +58,8 @@ services:
       sh -c "yarn migrate && pm2-runtime dist/main.js"
   bora-pagamentos:
     image: gesuvs/pagamentos
-      # networks:
-      #   - proxy
+      networks:
+        - proxy
       depends_on:
         # - postgres
         - gateway
