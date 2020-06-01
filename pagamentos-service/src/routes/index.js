@@ -4,7 +4,15 @@ import {
   updateSaldo,
 } from '../controllers/CarteiraController';
 
+import {
+  InsertHistorico
+} from '../controllers/ExtratoController';
+
 export const routes = Router();
 
 routes.post('/pagamentos', create);
-routes.post('/pagamentos', updateSaldo);
+routes.put('/pagamentos', updateSaldo);
+
+routes.post('/pagamentos', InsertHistorico);
+
+
