@@ -1,7 +1,7 @@
-import { QRCode } from "../../entity/QRCode";
-import { IQRCode } from "../../interface";
-import { getRepository, getConnection } from "typeorm";
-import { from } from "rxjs";
+import { QRCode } from '../../entity/QRCode';
+import { QRCodeI } from '../../interface';
+import { getConnection } from 'typeorm';
+import { from, Observable } from 'rxjs';
 
-export const create = (qrCode: IQRCode) =>
+export const create = (qrCode: QRCodeI): Observable<QRCode> =>
   from(getConnection().getRepository(QRCode).save(qrCode));

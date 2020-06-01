@@ -1,4 +1,4 @@
-export interface IQRCode {
-  codigo: string;
+export interface QRCodeI {
+  code: string;
   expireAt: Date;
 }

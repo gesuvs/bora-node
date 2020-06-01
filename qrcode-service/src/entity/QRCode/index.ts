@@ -4,41 +4,47 @@ import {
   PrimaryColumn,
   CreateDateColumn,
   UpdateDateColumn,
-} from "typeorm";
+} from 'typeorm';
 
 @Entity({
-  name: "qr_code",
+  name: 'qr_code',
 })
 export class QRCode {
   @PrimaryColumn({
-    type: "uuid",
-    generated: "uuid",
+    type: 'uuid',
+    generated: 'uuid',
   })
   id: string;
 
   @Column({
-    type: "varchar",
+    type: 'varchar',
     unique: true,
     nullable: false,
   })
   code: string;
 
   @Column({
-    type: "date",
+    type: 'timestamp',
     nullable: false,
-    name: "expire_at",
+    name: 'expire_at',
   })
   expireAt: Date;
 
+  @Column({
+    type: 'integer',
+    default: 4,
+  })
+  scale: number;
+
   @CreateDateColumn({
-    type: "timestamptz",
-    name: "created_at",
+    type: 'timestamptz',
+    name: 'created_at',
   })
   createdAt: Date;
 
   @UpdateDateColumn({
-    type: "timestamptz",
-    name: "updated_at",
+    type: 'timestamptz',
+    name: 'updated_at',
   })
   updatedAt: Date;
 }

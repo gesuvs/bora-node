@@ -1,11 +1,4 @@
-import { QRCodeToDataURLOptions, toDataURL } from "qrcode";
-
-import { from, Observable } from "rxjs";
-import { option } from "fp-ts/lib/Option";
-
-interface option<QRCodeToDataURLOptions> {
-  scale: number;
-}
+import { QRCodeToDataURLOptions, toDataURL } from 'qrcode';
 
 const options = (scale: number) => {
   const obj: QRCodeToDataURLOptions = {
@@ -14,12 +7,5 @@ const options = (scale: number) => {
   return obj;
 };
 
-
-const qrString = "https://www.c-sharpcorner.com/blogs/generate-qrcode-in-node";
-
-export const generateQRCode = (url: string, scale: number) =>
-  new Promise((resolve) => resolve(toDataURL(url, options(scale))));
-
-
-
-// console.log(options(15));
+export const generateQRCode = (code: string, scale: number): Promise<string> =>
+  new Promise(resolve => resolve(toDataURL(code, options(scale))));

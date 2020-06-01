@@ -1,9 +1,12 @@
-import "reflect-metadata";
-import "dotenv/config";
-import { createServer } from "@marblejs/core";
-import { IO } from "fp-ts/lib/IO";
-import { listener } from "./config/http.listener";
-import { createConnection } from "typeorm";
+import 'reflect-metadata';
+import { config } from 'dotenv';
+import { createServer } from '@marblejs/core';
+import { IO } from 'fp-ts/lib/IO';
+import { listener } from './config/listener';
+
+import { database } from './database';
+
+config();
 
 const server = createServer({
   port: Number(process.env.PORT),
@@ -12,7 +15,4 @@ const server = createServer({
 });
 
 const main: IO<void> = async () => await (await server)();
-createConnection().then(async (conn) => {
-  console.log("conectado");
-  main();
-});
+database.then(async () => main()).catch(console.error);
