@@ -1,4 +1,4 @@
-import { QRCode } from '../entity/QRCode';
+import { QRCode } from '../entity/qrcode';
 import { createConnection } from 'typeorm';
 import { config } from 'dotenv';
 config();

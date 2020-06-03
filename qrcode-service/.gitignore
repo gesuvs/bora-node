@@ -5,3 +5,5 @@ dist/
 tmp/
 temp/
 .env
+.ssh/*.key
+.ssh/*.pub
