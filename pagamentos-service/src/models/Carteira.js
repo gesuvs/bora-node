@@ -1,4 +1,4 @@
-import { Model, Sequelize } from 'sequelize';
+import { Model, Sequelize, DataTypes } from 'sequelize';
 import config from '../config/database';
 const sequelize = new Sequelize(config);
 
@@ -14,17 +14,10 @@ Carteira.init(
       type: DataTypes.UUID,
       foreignKey: true,
     },
-    saldo: DataTypes.INTEGER.UNSIGNED.ZEROFILL
+    saldo: DataTypes.DOUBLE
   },
   {
     tableName: 'carteira',
-    sequelize,
-    scopes: {
-      withoutPassword: {
-        attributes: {
-          exclude: ['password'],
-        },
-      },
-    },
+    sequelize
   }
 );

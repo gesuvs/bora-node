@@ -1,4 +1,4 @@
-import { Model, Sequelize } from 'sequelize';
+import { Model, Sequelize, DataTypes } from 'sequelize';
 import config from '../config/database';
 const sequelize = new Sequelize(config);
 
@@ -10,7 +10,7 @@ Extrato.init(
       type: DataTypes.UUID,
       defaultValue: Sequelize.UUIDV4,
     },
-    saldo: DataTypes.FLOAT.UNSIGNED.ZEROFILL,
+    saldo: DataTypes.FLOAT,
     data: DataTypes.DATE(),
     id_usuario: {
       type: DataTypes.UUID,
@@ -19,13 +19,6 @@ Extrato.init(
   },
   {
     tableName: 'extrato',
-    sequelize,
-    scopes: {
-      withoutPassword: {
-        attributes: {
-          exclude: ['password'],
-        },
-      },
-    },
+    sequelize
   }
 );

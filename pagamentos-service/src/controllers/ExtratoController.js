@@ -1,6 +1,5 @@
 import { logger } from '../logs';
 import Extrato from '../models/Extrato';
-import User from '../models/User';
 
 export const InsertHistorico = async (req, res) => {
 
@@ -27,7 +26,7 @@ export const InsertHistorico = async (req, res) => {
 export const GetHistorico = async (req, res) => {
 
     const {id_usuario} = req.body;
-    
+
     await Extrato.findAll({
         where: {
             id_usuario,

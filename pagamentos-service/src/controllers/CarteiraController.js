@@ -1,6 +1,5 @@
 import { logger } from '../logs';
 import Carteira from '../models/Carteira';
-import User from '../models/User';
 
 export const create = async (req, res) => {
 

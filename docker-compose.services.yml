@@ -74,7 +74,7 @@ services:
       ports:
         - ${USER_PORT}:${USER_PORT}
       command: >
-        sh -c "yarn migrate && pm2-runtime dist/main.js"
+        sh -c "yarn migrate && pm2-runtime server.js"
   bora-evento:
     image: gesuvs/eventos
     networks:
