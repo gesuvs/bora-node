@@ -31,7 +31,7 @@ export const create = async (req, res) => {
 
 export const updateSaldo = async (req, res) => {
 
-  const { id_usuario } = req.params;
+  const { id_usuario, id_organizador, valor } = req.params;
   await Carteira.findOne({
     where: {
       id_usuario,
@@ -41,12 +41,23 @@ export const updateSaldo = async (req, res) => {
   if (!result) return res.sendStatus(400);
 
   result.update({
-    saldo: req.params
+    saldo: saldo - valor
   }).success(function () {})
 
-  this.insertSaldoOwner();
+  this.insertSaldoOwner(id_organizador, valor);
 };
 
-  export const insertSaldoOwner = async () => {
+export const insertSaldoOwner = async () => {
 
-  };
+  await Carteira.findOne({
+    where: {
+      id_organizador,
+    },
+  }).then(result => res.json(result));
+
+  if (!result) return res.sendStatus(400);
+
+  result.update({
+    saldo: saldo + valor
+  }).success(function () {})
+};
