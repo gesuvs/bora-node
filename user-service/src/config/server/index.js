@@ -9,13 +9,14 @@ import session from 'express-session';
 
 export const configServerApp = express();
 
-console.log(process.env.USER_PORT);
-
+configServerApp.enable('trust proxy');
 configServerApp.use(cors());
 configServerApp.use(express.json());
 configServerApp.use(helmet());
 configServerApp.use(
   session({
+    resave: false,
+    saveUninitialized: true,
     secret: 'mudar para variavel de ambiente',
     key: 'cookien session mudar para variavel de ambiente',
     cookie: {
