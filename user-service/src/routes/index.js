@@ -2,11 +2,10 @@ import { Router } from 'express';
 
 import * as user from '../controllers';
 
-import { validateToken } from '../middleware/verifyToken';
-
-import { userValidationRules, validate } from '../middleware/validators';
+import { validateToken, userValidationRules, validate } from '../middleware';
 
 export const routes = Router();
+
 routes.post('/auth', user.login);
 routes.post('/', userValidationRules(), validate, user.create);
 
