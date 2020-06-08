@@ -13,12 +13,3 @@ services:
       - 5432:5432
     volumes:
       - /var/lib/postgresql/data
-  app:
-    build: .
-    container_name: user-service
-    restart: always
-    depends_on:
-      - postgres
-    ports:
-      - ${USER_PORT}:${USER_PORT}
-    entrypoint: ["/bin/bash", "./entrypoint.sh"]
