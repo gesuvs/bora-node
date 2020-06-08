@@ -16,15 +16,16 @@ export const create = async (req, res) => {
   if (!username || !mail || !password) return res.sendStatus(400);
 
   await User.create({ name, phone, username, mail, password })
-    .then(() => {
-      res.sendStatus(201);
+    .then(result => {
+      if (result) return res.sendStatus(201);
+      else return res.sendStatus(400);
     })
     .catch(err => {
       logger.log({
         level: 'error',
         message: err.message,
       });
-      res.status(400).send({
+      res.status(500).send({
         data: {
           name: err.name,
           description: err.message,
