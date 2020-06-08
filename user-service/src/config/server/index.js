@@ -5,6 +5,7 @@ import helmet from 'helmet';
 import redis from 'redis';
 import RateLimit from 'express-rate-limit';
 import RateLimitRedis from 'rate-limit-redis';
+import session from 'express-session';
 
 export const configServerApp = express();
 
@@ -13,6 +14,17 @@ console.log(process.env.USER_PORT);
 configServerApp.use(cors());
 configServerApp.use(express.json());
 configServerApp.use(helmet());
+configServerApp.use(
+  session({
+    secret: 'mudar para variavel de ambiente',
+    key: 'cookien session mudar para variavel de ambiente',
+    cookie: {
+      httpOnly: true,
+      secure: true,
+      expires: new Date(Date.now + 60 * 60 * 1000),
+    },
+  })
+);
 configServerApp.use(
   new RateLimit({
     store: new RateLimitRedis({
