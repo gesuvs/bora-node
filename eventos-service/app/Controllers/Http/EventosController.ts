@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
 import EventosModel from 'App/Models/EventosModel';
 import EventoParticipantesModel from 'App/Models/EventoParticipantesModel';
+import parse from 'date-fns/parse';
 
 export default class EventosController {
   public async create({
@@ -8,16 +10,21 @@ export default class EventosController {
     response,
   }: HttpContextContract): Promise<void> {
     const {
-      name,
-      owner,
-      roles,
-      isPublic,
-      password,
-      startDay,
-      startEnd,
-      starTime,
-      endTime,
+      event: {
+        name,
+        owner,
+        roles,
+        isPublic,
+        password,
+        startDay,
+        startEnd,
+        starTime,
+        endTime,
+      },
     } = request.all();
+
+    const startDayFormatted = parse(startDay, 'dd/MM/yyyy', new Date());
+    const startEndFormatted = parse(startEnd, 'dd/MM/yyyy', new Date());
 
     if (!name || !owner) return response.badRequest('nome é obrigatorio');
 
@@ -35,13 +42,13 @@ export default class EventosController {
       roles,
       isPublic,
       password,
-      startDay,
-      startEnd,
+      startDay: startDayFormatted,
+      startEnd: startEndFormatted,
       starTime,
       endTime,
     })
-      .then(res => {
-        return response.ok(res);
+      .then(() => {
+        return response.created('ok');
       })
       .catch(err => {
         response.badRequest(err);

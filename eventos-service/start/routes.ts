@@ -26,7 +26,9 @@ Route.get('/', async () => {
 
 Route.get('/eventos', 'EventosController.findAll');
 
-Route.post('/eventos', 'EventosController.create').middleware('auth');
+Route.post('/eventos', 'EventosController.create')
+
+// Route.post('/eventos', 'EventosController.create').middleware('auth');
 
 Route.post(
   '/eventos/:id/participar',
