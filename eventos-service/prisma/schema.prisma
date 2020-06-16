@@ -1,0 +1,47 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Event {
+  id             String @default(uuid()) @id
+  name           String
+  owner          String
+  description    String?
+  address        String
+  category       String[]
+  createdAt     DateTime  @default(now()) @map("created_at")
+  endTime       DateTime? @map("end_time")
+  isFree        Boolean @default(true) @map("is_free")
+  isPublic      Boolean @default(true)
+  password       String?
+  price          Float  @default(0)
+  privacy        PrivacyEnum @default(public)
+  startDay      DateTime  @map("start_day")
+  startEnd      DateTime  @map("start_end")
+  startTime     DateTime? @map("start_time")
+  streetNumber  Int @map("street_number")
+  updatedAt     DateTime  @updatedAt() @map("updated_at")
+  zipcode        String
+  eventGuest EventGuest[]
+}
+
+model EventGuest {
+  createdAt DateTime @default(now()) @map("created_at")
+  eventFk   String  @map("event_fk")
+  id         String   @default(uuid()) @id
+  updatedAt DateTime @updatedAt() @map("updated_at")
+  username   String
+  Event   Event @relation(fields: [eventFk], references: [id])
+}
+
+enum PrivacyEnum {
+  onlyFriendsOfFriends @map("only friends of friends")
+  onlyFrinds @map("only frinds")
+  private
+  public
+}
