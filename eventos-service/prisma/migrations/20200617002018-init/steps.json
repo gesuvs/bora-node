@@ -198,61 +198,11 @@
       "value": "now()"
     },
     {
-      "tag": "CreateDirective",
-      "location": {
-        "path": {
-          "tag": "Field",
-          "model": "Event",
-          "field": "createdAt"
-        },
-        "directive": "map"
-      }
-    },
-    {
-      "tag": "CreateArgument",
-      "location": {
-        "tag": "Directive",
-        "path": {
-          "tag": "Field",
-          "model": "Event",
-          "field": "createdAt"
-        },
-        "directive": "map"
-      },
-      "argument": "",
-      "value": "\"created_at\""
-    },
-    {
       "tag": "CreateField",
       "model": "Event",
       "field": "endTime",
       "type": "DateTime",
       "arity": "Optional"
-    },
-    {
-      "tag": "CreateDirective",
-      "location": {
-        "path": {
-          "tag": "Field",
-          "model": "Event",
-          "field": "endTime"
-        },
-        "directive": "map"
-      }
-    },
-    {
-      "tag": "CreateArgument",
-      "location": {
-        "tag": "Directive",
-        "path": {
-          "tag": "Field",
-          "model": "Event",
-          "field": "endTime"
-        },
-        "directive": "map"
-      },
-      "argument": "",
-      "value": "\"end_time\""
     },
     {
       "tag": "CreateField",
@@ -309,7 +259,7 @@
         "directive": "map"
       },
       "argument": "",
-      "value": "\"is_free\""
+      "value": "\"isFree\""
     },
     {
       "tag": "CreateField",
@@ -351,6 +301,31 @@
       "arity": "Optional"
     },
     {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Event",
+          "field": "password"
+        },
+        "directive": "default"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Event",
+          "field": "password"
+        },
+        "directive": "default"
+      },
+      "argument": "",
+      "value": "\"\""
+    },
+    {
       "tag": "CreateField",
       "model": "Event",
       "field": "price",
@@ -380,7 +355,7 @@
         "directive": "default"
       },
       "argument": "",
-      "value": "0"
+      "value": "0.0"
     },
     {
       "tag": "CreateField",
@@ -422,61 +397,11 @@
       "arity": "Required"
     },
     {
-      "tag": "CreateDirective",
-      "location": {
-        "path": {
-          "tag": "Field",
-          "model": "Event",
-          "field": "startDay"
-        },
-        "directive": "map"
-      }
-    },
-    {
-      "tag": "CreateArgument",
-      "location": {
-        "tag": "Directive",
-        "path": {
-          "tag": "Field",
-          "model": "Event",
-          "field": "startDay"
-        },
-        "directive": "map"
-      },
-      "argument": "",
-      "value": "\"start_day\""
-    },
-    {
       "tag": "CreateField",
       "model": "Event",
       "field": "startEnd",
       "type": "DateTime",
       "arity": "Required"
-    },
-    {
-      "tag": "CreateDirective",
-      "location": {
-        "path": {
-          "tag": "Field",
-          "model": "Event",
-          "field": "startEnd"
-        },
-        "directive": "map"
-      }
-    },
-    {
-      "tag": "CreateArgument",
-      "location": {
-        "tag": "Directive",
-        "path": {
-          "tag": "Field",
-          "model": "Event",
-          "field": "startEnd"
-        },
-        "directive": "map"
-      },
-      "argument": "",
-      "value": "\"start_end\""
     },
     {
       "tag": "CreateField",
@@ -486,61 +411,11 @@
       "arity": "Optional"
     },
     {
-      "tag": "CreateDirective",
-      "location": {
-        "path": {
-          "tag": "Field",
-          "model": "Event",
-          "field": "startTime"
-        },
-        "directive": "map"
-      }
-    },
-    {
-      "tag": "CreateArgument",
-      "location": {
-        "tag": "Directive",
-        "path": {
-          "tag": "Field",
-          "model": "Event",
-          "field": "startTime"
-        },
-        "directive": "map"
-      },
-      "argument": "",
-      "value": "\"start_time\""
-    },
-    {
       "tag": "CreateField",
       "model": "Event",
       "field": "streetNumber",
       "type": "Int",
       "arity": "Required"
-    },
-    {
-      "tag": "CreateDirective",
-      "location": {
-        "path": {
-          "tag": "Field",
-          "model": "Event",
-          "field": "streetNumber"
-        },
-        "directive": "map"
-      }
-    },
-    {
-      "tag": "CreateArgument",
-      "location": {
-        "tag": "Directive",
-        "path": {
-          "tag": "Field",
-          "model": "Event",
-          "field": "streetNumber"
-        },
-        "directive": "map"
-      },
-      "argument": "",
-      "value": "\"street_number\""
     },
     {
       "tag": "CreateField",
@@ -561,31 +436,6 @@
       }
     },
     {
-      "tag": "CreateDirective",
-      "location": {
-        "path": {
-          "tag": "Field",
-          "model": "Event",
-          "field": "updatedAt"
-        },
-        "directive": "map"
-      }
-    },
-    {
-      "tag": "CreateArgument",
-      "location": {
-        "tag": "Directive",
-        "path": {
-          "tag": "Field",
-          "model": "Event",
-          "field": "updatedAt"
-        },
-        "directive": "map"
-      },
-      "argument": "",
-      "value": "\"updated_at\""
-    },
-    {
       "tag": "CreateField",
       "model": "Event",
       "field": "zipcode",
@@ -602,95 +452,6 @@
     {
       "tag": "CreateModel",
       "model": "EventGuest"
-    },
-    {
-      "tag": "CreateField",
-      "model": "EventGuest",
-      "field": "createdAt",
-      "type": "DateTime",
-      "arity": "Required"
-    },
-    {
-      "tag": "CreateDirective",
-      "location": {
-        "path": {
-          "tag": "Field",
-          "model": "EventGuest",
-          "field": "createdAt"
-        },
-        "directive": "default"
-      }
-    },
-    {
-      "tag": "CreateArgument",
-      "location": {
-        "tag": "Directive",
-        "path": {
-          "tag": "Field",
-          "model": "EventGuest",
-          "field": "createdAt"
-        },
-        "directive": "default"
-      },
-      "argument": "",
-      "value": "now()"
-    },
-    {
-      "tag": "CreateDirective",
-      "location": {
-        "path": {
-          "tag": "Field",
-          "model": "EventGuest",
-          "field": "createdAt"
-        },
-        "directive": "map"
-      }
-    },
-    {
-      "tag": "CreateArgument",
-      "location": {
-        "tag": "Directive",
-        "path": {
-          "tag": "Field",
-          "model": "EventGuest",
-          "field": "createdAt"
-        },
-        "directive": "map"
-      },
-      "argument": "",
-      "value": "\"created_at\""
-    },
-    {
-      "tag": "CreateField",
-      "model": "EventGuest",
-      "field": "eventFk",
-      "type": "String",
-      "arity": "Required"
-    },
-    {
-      "tag": "CreateDirective",
-      "location": {
-        "path": {
-          "tag": "Field",
-          "model": "EventGuest",
-          "field": "eventFk"
-        },
-        "directive": "map"
-      }
-    },
-    {
-      "tag": "CreateArgument",
-      "location": {
-        "tag": "Directive",
-        "path": {
-          "tag": "Field",
-          "model": "EventGuest",
-          "field": "eventFk"
-        },
-        "directive": "map"
-      },
-      "argument": "",
-      "value": "\"event_fk\""
     },
     {
       "tag": "CreateField",
@@ -738,45 +499,9 @@
     {
       "tag": "CreateField",
       "model": "EventGuest",
-      "field": "updatedAt",
-      "type": "DateTime",
+      "field": "eventFk",
+      "type": "String",
       "arity": "Required"
-    },
-    {
-      "tag": "CreateDirective",
-      "location": {
-        "path": {
-          "tag": "Field",
-          "model": "EventGuest",
-          "field": "updatedAt"
-        },
-        "directive": "updatedAt"
-      }
-    },
-    {
-      "tag": "CreateDirective",
-      "location": {
-        "path": {
-          "tag": "Field",
-          "model": "EventGuest",
-          "field": "updatedAt"
-        },
-        "directive": "map"
-      }
-    },
-    {
-      "tag": "CreateArgument",
-      "location": {
-        "tag": "Directive",
-        "path": {
-          "tag": "Field",
-          "model": "EventGuest",
-          "field": "updatedAt"
-        },
-        "directive": "map"
-      },
-      "argument": "",
-      "value": "\"updated_at\""
     },
     {
       "tag": "CreateField",
@@ -830,6 +555,56 @@
       },
       "argument": "references",
       "value": "[id]"
+    },
+    {
+      "tag": "CreateField",
+      "model": "EventGuest",
+      "field": "createdAt",
+      "type": "DateTime",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "EventGuest",
+          "field": "createdAt"
+        },
+        "directive": "default"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "EventGuest",
+          "field": "createdAt"
+        },
+        "directive": "default"
+      },
+      "argument": "",
+      "value": "now()"
+    },
+    {
+      "tag": "CreateField",
+      "model": "EventGuest",
+      "field": "updatedAt",
+      "type": "DateTime",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "EventGuest",
+          "field": "updatedAt"
+        },
+        "directive": "updatedAt"
+      }
     }
   ]
 }

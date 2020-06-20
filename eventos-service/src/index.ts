@@ -5,5 +5,5 @@ import routes from './routes';
 const app = express();
 
 app.use(express.json());
-app.use(routes);
-app.listen(5555);
+app.use('/eventos', routes);
+app.listen(5555, '0.0.0.0');

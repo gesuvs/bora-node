@@ -13,15 +13,3 @@ services:
       - 5432:5432
     volumes:
       - /var/lib/postgresql/data
-  app:
-    build: .
-    container_name: evento-service
-    restart: always
-    environment:
-      DATABASE_URL: ${DATABASE_URL}
-    depends_on:
-      - postgres
-    ports:
-      - ${PORT}:${PORT}
-    command: >
-      sh -c "pm2-runtime index.js"
