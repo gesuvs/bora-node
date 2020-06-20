@@ -1,8 +1,8 @@
 import 'reflect-metadata';
-import * as express from 'express';
+import express from 'express';
 import routes from './routes';
 
-const app = express();
+const app = express()
 
 app.use(express.json());
 app.use('/eventos', routes);

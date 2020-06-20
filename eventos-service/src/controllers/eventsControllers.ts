@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { Request, Response } from 'express';
 import { parse } from 'date-fns';
 import { PrismaClient, Event } from '@prisma/client';
