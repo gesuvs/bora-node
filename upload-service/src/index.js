@@ -10,10 +10,14 @@ const path = require("path");
 
 const app = express();
 
-mongoose.connect(process.env.MONGO_URL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose
+  .connect(process.env.MONGO_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then((res) => {
+    console.log("Conectado");
+  });
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

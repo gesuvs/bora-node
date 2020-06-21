@@ -3,7 +3,7 @@ export const swaggerDefinition = {
   openapi: '3.0.1',
   info: {
     title: 'API User - Swagger Doc',
-    version: '1.0.0',
+    version: '1.1.0',
     description: 'Endpoints to test the user routes',
   },
   tags: [
@@ -25,24 +25,29 @@ export const swaggerDefinition = {
       type: 'object',
       required: ['mail', 'username', 'password'],
       properties: {
-        name: {
-          type: 'string',
-          pattern: /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/,
-        },
-        mail: {
-          type: 'string',
-          format: 'email',
-        },
-        phone: {
-          type: 'string',
-        },
-        username: {
-          type: 'string',
-        },
-        password: {
-          type: 'string',
-          format: 'password',
-          pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/,
+        user: {
+          type: 'object',
+          properties: {
+            name: {
+              type: 'string',
+              pattern: /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/,
+            },
+            mail: {
+              type: 'string',
+              format: 'email',
+            },
+            phone: {
+              type: 'string',
+            },
+            username: {
+              type: 'string',
+            },
+            password: {
+              type: 'string',
+              format: 'password',
+              pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/,
+            },
+          },
         },
       },
     },
@@ -50,13 +55,18 @@ export const swaggerDefinition = {
       type: 'object',
       required: ['username', 'password'],
       properties: {
-        username: {
-          type: 'string',
-        },
-        password: {
-          type: 'string',
-          format: 'password',
-          pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/,
+        user: {
+          type: 'object',
+          properties: {
+            username: {
+              type: 'string',
+            },
+            password: {
+              type: 'string',
+              format: 'password',
+              pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/,
+            },
+          },
         },
       },
     },
