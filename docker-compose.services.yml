@@ -48,7 +48,6 @@ services:
       - proxy
     depends_on:
       - postgres
-      - bora-evento
     environment:
       HOST: ${HOST}
       USER_PORT: ${USER_PORT}

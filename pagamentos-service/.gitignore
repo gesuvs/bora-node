@@ -1,0 +1,12 @@
+node_modules
+.env
+data
+.vscode
+*.key
+*.key.pub
+**/*.sqlite
+src/logs/*.log
+dist
+.env.dev
+.env.prod
+.ssh
