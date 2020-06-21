@@ -4,3 +4,4 @@ tls/*.srl
 tls/*.key
 tls/*.key.pub
 .env.prod
+token-docker-machine

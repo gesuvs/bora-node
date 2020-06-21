@@ -18,6 +18,10 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       PG_DATA: /var/lib/postgresql/data/pgdata
       POSTGRES_DB: ${POSTGRES_DB}
+    healthcheck:
+      interval: 10s
+      timeout: 2s
+      retries: 10
     ports:
       - 5432:5432
     volumes:
@@ -30,7 +34,8 @@ services:
     networks:
       - proxy
     depends_on:
-      - postgres
+      - bora-evento
+      - bora-user
     deploy:
       labels:
         - traefik.frontend.rule=PathPrefixStrip:/api
@@ -42,8 +47,7 @@ services:
     networks:
       - proxy
     depends_on:
-      # - postgres
-      - gateway
+      - postgres
     environment:
       HOST: ${HOST}
       USER_PORT: ${USER_PORT}
@@ -55,43 +59,16 @@ services:
     ports:
       - ${USER_PORT}:${USER_PORT}
     command: >
-      sh -c "yarn migrate && pm2-runtime dist/main.js"
-  bora-pagamentos:
-    image: gesuvs/pagamentos
-      networks:
-        - proxy
-      depends_on:
-        # - postgres
-        - gateway
-      environment:
-        HOST: ${HOST}
-        USER_PORT: ${USER_PORT}
-        POSTGRES_HOST: ${POSTGRES_HOST}
-        POSTGRES_PORT: ${POSTGRES_PORT}
-        POSTGRES_USER: ${POSTGRES_USER}
-        POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-        POSTGRES_DB: ${POSTGRES_DB}
-      ports:
-        - ${USER_PORT}:${USER_PORT}
-      command: >
-        sh -c "yarn migrate && pm2-runtime server.js"
+      sh -c "pm2-runtime dist/main.js"
   bora-evento:
     image: gesuvs/eventos
     networks:
       - proxy
     depends_on:
-      # - postgres
-      - gateway
+      - postgres
     environment:
-      HOST: ${HOST}
-      PORT: ${EVENTO_PORT}
-      DB_CONNECTION: ${DB_CONNECTION}
-      DB_HOST: ${POSTGRES_HOST}
-      DB_PORT: ${POSTGRES_PORT}
-      DB_USER: ${POSTGRES_USER}
-      DB_PASSWORD: ${POSTGRES_PASSWORD}
-      DB_NAME: ${POSTGRES_DB}
+      DATABASE_URL: ${DATABASE_URL}
     ports:
       - ${EVENTO_PORT}:${EVENTO_PORT}
     command: >
-      sh -c "yarn migrate && pm2-runtime server.js"
+      sh -c "pm2-runtime index.js"

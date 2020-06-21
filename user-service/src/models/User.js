@@ -3,7 +3,7 @@ import bcryptjs from 'bcryptjs';
 import config from '../config/database';
 const sequelize = new Sequelize(config);
 const strongRegex = new RegExp(
-  '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})'
+  '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,15}$)'
 );
 
 class User extends Model {}
@@ -72,8 +72,10 @@ User.beforeCreate(async user => {
 
 User.beforeFind(async user => {
   if (user.where) {
-    const userUpperCase = await user.where.username.toUpperCase();
-    user.where.username = userUpperCase;
+    const userUpperCase = await user.where?.username?.toUpperCase();
+    if (userUpperCase) {
+      user.where.username = userUpperCase;
+    }
   }
 });
 export default User;

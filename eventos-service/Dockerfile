@@ -3,15 +3,12 @@ FROM node:12.16.1-alpine
 WORKDIR /usr/src/app
 
 
-COPY ["package.json","entrypoint.sh","./"]
+COPY ["package.json","prisma/schema.prisma","entrypoint.sh","./"]
 
-RUN apk update && apk upgrade && \
-  apk add --no-cache bash git openssh && \
-  yarn && yarn global add pm2 && yarn cache clean && \
-  apk del git openssh
+RUN yarn && yarn global add pm2 && yarn cache clean
 
-COPY build .
+COPY dist .
 
 EXPOSE 5555
 
-CMD ["pm2-runtime", "server.js"]
+CMD ["pm2-runtime", "index.js"]
