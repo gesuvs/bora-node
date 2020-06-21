@@ -3,6 +3,7 @@ const multer = require("multer");
 const multerConfig = require("../config/multer");
 const User = require("../documents/User");
 const Event = require("../documents/Event");
+const { CompressionTypes } = require("kafkajs");
 
 routes.get("/teste", (req, res) => res.send("teste"));
 
@@ -14,6 +15,8 @@ routes.post(
 
     const keyTrim = key.split(" ").join("");
     const name = originalname.split(" ").join("");
+
+    const code = require("../utils/makeCode")(7);
 
     const user = await User.create({
       name,
@@ -34,13 +37,16 @@ routes.post(
     const keyTrim = key.split(" ").join("");
     const name = originalname.split(" ").join("");
 
+    const code = require("../utils/makeCode")(7);
+
     const event = await Event.create({
       name,
-      code: require("../utils/makeCode")(7),
+      code,
       size,
       key: keyTrim,
       url,
     });
+
     res.json(event);
   }
 );
