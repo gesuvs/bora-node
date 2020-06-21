@@ -19,10 +19,11 @@ export const app = express();
 app.set(
   logger.log({
     level: 'info',
-    message: `Started 🔺 on ${process.env.HOST}:${process.env.USER_PORT} || ${process.env.POSTGRES_HOST}`,
+    message: `Started 🔺 on ${process.env.HOST}:${process.env.PAY_PORT} || ${process.env.POSTGRES_HOST}`,
+
   })
 );
 
 console.log(process.env.NODE_ENV)
 app.use(configServerApp);
-app.use('/pagamentos', routes);
+app.use('/payment', routes);

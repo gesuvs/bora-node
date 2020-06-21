@@ -1,20 +1,28 @@
 import { Router } from 'express';
 import {
-  create,
-  updateSaldo,
-} from '../controllers/CarteiraController';
+  createWallet,
+  findWallet,
+} from '../controllers/WalletController';
 
 import {
-  InsertHistorico, GetHistorico
-} from '../controllers/ExtratoController';
+  findAllExtractbyWallet , createExtract
+} from '../controllers/ExtractController';
+
+import {
+  paymentTransaction
+} from '../controllers/PaymentController';
 
 export const routes = Router();
 
-routes.post('/pagamentos/criarCarteira', create);
-routes.put('/pagamentos/atualizarSaldo', updateSaldo);
+routes.post('/:idUser/createWallet', createWallet);
+routes.get('/:idUser/findWallet', findWallet);
 
-routes.post('/pagamentos/inserirHistorico', InsertHistorico);
-routes.get('/pagamentos/visualizarExtrato', GetHistorico);
+routes.post('/:idWallet/createRegisterExtract', createExtract);
+routes.get('/:idWallet/findAllExtractbyWallet/:page', findAllExtractbyWallet);
+
+routes.put('/:idUserParticipantEvent/:idUserOwnerEvent/PaymentTransaction', paymentTransaction);
+
+
 
 
 
