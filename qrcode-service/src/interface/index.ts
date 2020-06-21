@@ -7,3 +7,9 @@ export interface TokenValidationI {
   publicKey?: string;
   token?: string;
 }
+
+export interface RequestHTTPI {
+  params: {
+    id: string;
+  };
+}
