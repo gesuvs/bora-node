@@ -75,7 +75,6 @@ export const removeBalanceWallet = async (req, res) => {
 
 
   if((userExist && Balance > 0) && (userExist.balance > 0 )){
-    console.log("entrou")
     await Wallet.update(
       { balance: userExist.balance - Balance},
       { where: { id_wallet: userExist.id_wallet } }
