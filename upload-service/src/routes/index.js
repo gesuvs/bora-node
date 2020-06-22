@@ -25,6 +25,24 @@ routes.post(
       key: keyTrim,
       url,
     });
+
+    const message = {
+      code,
+      url: user.url,
+    };
+
+    await req.producer.send({
+      topic: "issue-upload",
+      compression: CompressionTypes.GZIP,
+      messages: [
+        {
+          value: JSON.stringify(message),
+        },
+      ],
+    });
+
+    await req.producer.disconnect();
+
     res.json(user);
   }
 );
