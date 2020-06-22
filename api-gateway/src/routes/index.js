@@ -3,7 +3,7 @@ import httpProxy from "express-http-proxy";
 
 const userServiceProxy = httpProxy(`http://${process.env.USER_SERVICE}:3333`);
 const eventoServiceProxy = httpProxy(`http://${process.env.EVENTO_SERVICE}:5555`);
-const pagamentoServiceProxy = httpProxy(`http://${process.env.PAGAMENTO_SERVICE}:5555`);
+const paymentServiceProxy = httpProxy(`http://${process.env.PAGAMENTO_SERVICE}:6666`);
 
 const routes = Router();
 
@@ -24,11 +24,11 @@ routes.post("/eventos/*", (req, res, next) => {
 });
 
 routes.get("/pagamentos/*", (req, res, next) => {
-  pagamentoServiceProxy(req, res, next);
+  paymentServiceProxy(req, res, next);
 });
 
 routes.post("/pagamentos/*", (req, res, next) => {
-  pagamentoServiceProxy(req, res, next);
+  paymentServiceProxy(req, res, next);
 });
 
 export default routes;

@@ -7,6 +7,7 @@ const morgan = require("morgan");
 const routes = require("./routes");
 const mongoose = require("mongoose");
 const path = require("path");
+const { Kafka, logLevel } = require("kafkajs");
 
 const app = express();
 
@@ -19,15 +20,35 @@ mongoose
     console.log("Conectado");
   });
 
+const kafka = new Kafka({
+  clientId: "api",
+  brokers: ["localhost:9092"],
+  logLevel: logLevel.WARN,
+  retry: {
+    initialRetryTime: 300,
+    retries: 10,
+  },
+});
+
+const producer = kafka.producer();
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
+app.use((req, res, next) => {
+  req.producer = producer;
+  return next();
+});
 app.use(
   "/files",
   express.static(path.resolve(__dirname, "..", "tmp", "uploads"))
 );
 app.use("/upload", routes);
 
-app.listen(process.env.APP_PORT, () => {
-  console.log(`Run: ${process.env.APP_PORT}`);
-});
+async function run() {
+  await producer.connect();
+  app.listen(process.env.APP_PORT, () => {
+    console.log(`Run: ${process.env.APP_PORT}`);
+  });
+}
+run().catch(console.error);

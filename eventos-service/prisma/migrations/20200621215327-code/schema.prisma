@@ -4,12 +4,12 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url = "***"
 }
 
 model Event {
   id           String       @default(uuid()) @id
-  code         String?      @default("")
+  code         String       @default("")
   name         String
   owner        String
   description  String?
