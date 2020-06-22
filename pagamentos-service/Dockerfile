@@ -7,9 +7,8 @@ COPY ["package.json","./"]
 RUN yarn && yarn global add pm2 && \
   yarn cache clean
 
-
 COPY . .
 
-EXPOSE 8888
+EXPOSE 6666
 
 CMD ["pm2-runtime", "src/index.js"]
