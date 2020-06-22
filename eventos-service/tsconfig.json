@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "lib": ["es5", "es6", "es7", "dom"],
+    "lib": ["es7",],
     "target": "ES2017",
     "rootDir": "./src",
     "esModuleInterop": true,
@@ -15,12 +15,14 @@
     "declarationMap": true,
     "inlineSources": true,
     "sourceMap": true,
+    "typeRoots": ["./node_modules/@types", "./src/@types"],
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "declaration": true,
     "skipLibCheck": true,
     "paths": {
-      "@controllers/*": ["./src/controllers/*"]
+      "@controllers/*": ["./src/controllers/*"],
+      "@types/*": ["./src/@types/*"]
     }
   },
   "include": ["src/**/*"]

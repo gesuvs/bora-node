@@ -1,9 +1,10 @@
 import { Request, Response } from 'express';
 import { parse } from 'date-fns';
 import { PrismaClient, Event } from '@prisma/client';
+import { redis } from '../index';
+import { KafkaProducerResponse } from 'src/interfaces';
 
 const prima = new PrismaClient();
-
 export class EventController {
   public async create(req: Request, res: Response): Promise<void> {
     const {
@@ -27,9 +28,6 @@ export class EventController {
       },
     } = req.body;
 
-    const startDayFormatted = parse(startDay, 'dd/MM/yyyy', new Date());
-    const startEndFormatted = parse(startEnd, 'dd/MM/yyyy', new Date());
-
     if (!name || !owner) res.status(400).send({ err: 'Nome é obrigatorio' });
 
     if (isPublic === true && password) {
@@ -40,40 +38,57 @@ export class EventController {
       res.status(400).send({ err: 'evento privado senha é obrigatorio' });
     }
 
-    const event = prima.event.create({
-      data: {
-        name,
-        description,
-        owner,
-        zipcode,
-        address,
-        streetNumber,
-        category,
-        isFree,
-        isPublic,
-        password,
-        price,
-        privacy,
-        startDay: startDayFormatted,
-        startEnd: startEndFormatted,
-        startTime,
-        endTime,
-      },
+    const startDayFormatted = parse(startDay, 'dd/MM/yyyy', new Date());
+    const startEndFormatted = parse(startEnd, 'dd/MM/yyyy', new Date());
+
+    redis.get('event_code_url', async (err, reply) => {
+      const { code = null, url = null }: KafkaProducerResponse =
+        JSON.parse(reply) ?? '';
+      const event = prima.event.create({
+        data: {
+          name,
+          description,
+          code,
+          owner,
+          zipcode,
+          address,
+          streetNumber,
+          category,
+          isFree,
+          isPublic,
+          password,
+          price,
+          privacy,
+          startDay: startDayFormatted,
+          startEnd: startEndFormatted,
+          startTime,
+          endTime,
+          photoUrl: url,
+        },
+      });
+      if ((await event).id) {
+        redis.del('event_code_url', (err, result) => {
+          res.sendStatus(201);
+        });
+      } else {
+        res.sendStatus(400);
+      }
     });
-    if ((await event).id) {
-      res.sendStatus(201);
-    } else {
-      res.sendStatus(400);
-    }
   }
 
-  public async findAll(req: Request, res: Response) {
+  public async findAll(
+    req: Request,
+    res: Response
+  ): Promise<Response<Event[]>> {
     const events: Event[] = await prima.event.findMany();
     if (events.length > 0) return res.json(events);
     if (events.length === 0) return res.sendStatus(204);
   }
 
-  public async participate(req: Request, res: Response) {
+  public async participate(
+    req: Request,
+    res: Response
+  ): Promise<Response<void>> {
     const {
       event: { username },
     } = req.body;
