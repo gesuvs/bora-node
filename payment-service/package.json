@@ -1,6 +1,6 @@
 {
-  "name": "pagamentos-service",
-  "version": "0.0.1",
+  "name": "payment-service",
+  "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
