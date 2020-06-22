@@ -10,10 +10,14 @@ Extract.init(
       type: DataTypes.UUID,
       defaultValue: Sequelize.UUIDV4,
     },
-    balance: {type : DataTypes.FLOAT},
-    date: {
-      type: Sequelize.DATE,
-    },
+    balance: {type : DataTypes.STRING},
+    balance_transact: {type : DataTypes.FLOAT,
+                      defaultValue: DataTypes.UUIDV4},
+    transact_type: {type : DataTypes.STRING(1),
+                  defaultValue: DataTypes.UUIDV4},
+    oldBalance: {type : DataTypes.FLOAT,
+                    defaultValue: DataTypes.UUIDV4,
+                    field: 'old_balance'},
     createdAt: {
       type: DataTypes.DATE,
       field: 'created_at',

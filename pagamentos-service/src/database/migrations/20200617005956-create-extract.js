@@ -9,8 +9,12 @@ module.exports = {
         defaultValue: Sequelize.UUIDV4,
       },
       balance: {type : Sequelize.FLOAT},
-      date: {
-        type: Sequelize.DATE,
+      balance_transact: {type : Sequelize.FLOAT},
+      transact_type: {type : Sequelize.STRING(1)},
+      oldBalance : {
+        type: Sequelize.DOUBLE,
+        defaultValue: 0,
+        field: 'old_balance'
       },
       createdAt: {
         type: Sequelize.DATE,

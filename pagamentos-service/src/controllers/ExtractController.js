@@ -41,6 +41,9 @@ export const findAllExtractbyWallet = async (req, res) => {
       where: {
         wallet_id,
       },
+      order: [
+        ['id_extract', 'DESC']
+      ],
       offset: ((page - 1) * limit),
       limit: limit
     }).then(result => {

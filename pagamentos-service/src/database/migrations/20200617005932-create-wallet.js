@@ -8,7 +8,7 @@ module.exports = {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
       },
-      id_user: {
+      username: {
         type: Sequelize.STRING,
         allowNull: false
       },
@@ -22,6 +22,8 @@ module.exports = {
       },
       balance: {
         type: Sequelize.DOUBLE,
+        defaultValue: 0,
+
       },
       created_at: {
         type: 'TIMESTAMP',

@@ -10,7 +10,7 @@ Wallet.init(
       type: DataTypes.UUID,
       defaultValue: Sequelize.UUIDV4,
     },
-    id_user: {
+    username: {
       type: DataTypes.STRING,
       allowNull: false
     },
@@ -22,7 +22,11 @@ Wallet.init(
       type: DataTypes.DATE,
       field: 'updated_at'
     },
-    balance: DataTypes.DOUBLE
+    balance: {
+      type: DataTypes.DOUBLE,
+      defaultValue: 0
+    }
+    
   },
   {
     tableName: 'wallet',
