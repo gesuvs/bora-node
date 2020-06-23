@@ -1,33 +1,6 @@
 import { logger } from '../logs';
 import Extract from '../models/Extract';
 
-export const createExtract = async (req, res) => {
-
-  const wallet_id = req.params.idWallet;
-  const balance = req.body.balance;
-  console.log(wallet_id);
-  if (!wallet_id || !balance) return res.sendStatus(400);
-
-  await Extract.create({ wallet_id , balance})
-    .then(() => {
-      res.sendStatus(201);
-    })
-    .catch(err => {
-      logger.log({
-        level: 'error',
-        message: err.message,
-      });
-      res.status(400).send({
-        data: {
-          name: err.name,
-          description: err.message,
-        },
-      });
-    });
-};
-
-
-
 export const findAllExtractbyWallet = async (req, res) => {
 
   const wallet_id = req.params.idWallet;

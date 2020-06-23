@@ -58,65 +58,6 @@ export const addBalanceWallet = async (req, res) => {
 }
 
 
-export const removeBalanceWallet = async (req, res) => {
-  const username = req.params.username
-  const Balance = req.body.addBalance
-  
-  console.log(Balance)
-  if (!username) return res.sendStatus(400);
-  let userExist = null;
-  try{
-    userExist = await Wallet.findOne({
-      where: {
-        username,
-      },
-    })
-  }catch(err){}
-
-
-  if((userExist && Balance > 0) && (userExist.balance > 0 )){
-    await Wallet.update(
-      { balance: userExist.balance - Balance},
-      { where: { id_wallet: userExist.id_wallet } }
-    ).then(result => {
-        if (!result) return res.sendStatus(400);
-    }).catch(() => res.sendStatus(500)); 
-
-    let {id_wallet} = userExist;
-    let balance = (userExist.balance - Balance);
-    let balance_transact = Balance;
-    let transact_type = 'D';
-    let wallet_id = id_wallet;
-    let oldBalance = userExist.balance;
-    
-
-    const step1 = await Extract.create({ wallet_id , balance ,balance_transact,transact_type , oldBalance})
-    .then(() => {
-      return res.sendStatus(200);
-    })
-    .catch(err => {
-      logger.log({
-        level: 'error',
-        message: err.message,
-      });
-      res.status(400).send({
-        data: {
-          name: err.name,
-          description: err.message,
-        },
-      });
-    });
-  }else{
-    return res.sendStatus(400)
-  }
-
-
-}
-
-
-
-
-
 export const paymentTransaction = async (req, res) => {
 
     const {idUserParticipantEvent , idUserOwnerEvent} = req.params;
