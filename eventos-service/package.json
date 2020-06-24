@@ -5,8 +5,8 @@
   "scripts": {
     "clear": "rimraf dist",
     "build": "yarn clear && babel src --extensions \".js,.ts\" --out-dir dist --copy-files --no-copy-ignored",
-    "start": "node dist/index.js",
-    "dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpileOnly --ignore-watch node_modules --no-notify src/index.ts",
+    "start": "NODE_ENV=production node dist/index.js",
+    "dev": "NODE_ENV=development ts-node-dev -r tsconfig-paths/register --respawn --transpileOnly --ignore-watch node_modules --no-notify src/index.ts",
     "typeorm": "ts-node ./node_modules/typeorm/cli.js --config ormconfig.dev.js",
     "test": "jest"
   },

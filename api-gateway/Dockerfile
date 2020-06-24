@@ -4,10 +4,10 @@ WORKDIR /usr/src/app
 
 COPY ["package.json", "./"]
 
-RUN yarn && yarn cache clean --mirror
+RUN yarn && yarn global add pm2 && yarn cache clean --mirror
 
 COPY ./dist .
 
 EXPOSE 7777
 
-CMD yarn start
+CMD ["pm2-runtime", "server.js"]

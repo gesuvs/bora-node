@@ -10,6 +10,6 @@ RUN yarn && yarn global add pm2 && \
 
 COPY dist/ .
 
-EXPOSE 2222
+EXPOSE 4444
 
 CMD ["pm2-runtime", "index.js"]

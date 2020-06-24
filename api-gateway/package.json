@@ -5,8 +5,7 @@
   "license": "MIT",
   "scripts": {
     "build": "rm -rf dist && webpack",
-    "start": "node server.js",
-    "prod": "node dist/server.js",
+    "start": "node dist/server.js",
     "dev": "nodemon --exec sucrase-node ./src/index.js "
   },
   "dependencies": {

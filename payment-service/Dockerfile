@@ -9,6 +9,6 @@ RUN yarn && yarn global add pm2 && \
 
 COPY . .
 
-EXPOSE 6666
+EXPOSE 8888
 
-CMD ["pm2-runtime", "src/index.js"]
+CMD ["pm2-runtime", "dist/main.js"]

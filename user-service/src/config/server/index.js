@@ -26,20 +26,20 @@ configServerApp.use(
     },
   })
 );
-configServerApp.use(
-  new RateLimit({
-    store: new RateLimitRedis({
-      client: redis.createClient({
-        host: process.env.HOST_REDIS,
-        port: process.env.PORT_REDIS,
-      }),
-    }),
-    windowMs: 1000 * 60 * 15,
-    max: 100,
-    message: {
-      error: 'Too many requests, please try again later.',
-    },
-  })
-);
+// configServerApp.use(
+//   new RateLimit({
+//     store: new RateLimitRedis({
+//       client: redis.createClient({
+//         host: process.env.REDIS_HOST,
+//         port: process.env.REDIS_PORT,
+//       }),
+//     }),
+//     windowMs: 1000 * 60 * 15,
+//     max: 100,
+//     message: {
+//       error: 'Too many requests, please try again later.',
+//     },
+//   })
+// );
 configServerApp.use(compression());
 configServerApp.disable('x-powered-by');

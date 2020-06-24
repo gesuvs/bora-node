@@ -2,7 +2,6 @@ version: "3"
 services:
   mongo:
     image: "mongo"
-    container_name: "mongodb"
     environment:
       - MONGO_INITDB_DATABASE=bora-upload
       - MONGO_INITDB_ROOT_USERNAME=root
@@ -18,8 +17,30 @@ services:
     ports:
       - "9092:9092"
     environment:
-      KAFKA_ADVERTISED_HOST_NAME: localhost
+      KAFKA_ADVERTISED_HOST_NAME: kafka
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_CREATE_TOPICS: "issue-upload:1:1,upload-response:1:1"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+  app:
+    build: .
+    container_name: upload-service
+    restart: always
+    depends_on:
+      - kafka
+      - zookeeper
+      - mongo
+    environment:
+      APP_PORT: ${APP_PORT}
+      HOST: ${HOST}
+      MONGO_URL: ${MONGO_URL}
+      STORAGE_TYPE: ${STORAGE_TYPE}
+      KAFKA_HOST: ${KAFKA_HOST}
+      KAFKA_PORT: ${KAFKA_PORT}
+      AWS_ACCESSS_KEY_ID: ${AWS_ACCESSS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_DEFAULT_REGION: ${AWS_DEFAULT_REGION}
+    ports:
+      - ${APP_PORT}:${APP_PORT}
+    command: >
+      sh -c "pm2-runtime src/index.js"

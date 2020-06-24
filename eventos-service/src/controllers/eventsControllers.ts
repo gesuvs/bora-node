@@ -41,39 +41,39 @@ export class EventController {
     const startDayFormatted = parse(startDay, 'dd/MM/yyyy', new Date());
     const startEndFormatted = parse(startEnd, 'dd/MM/yyyy', new Date());
 
-    redis.get('event_code_url', async (err, reply) => {
-      const { code = null, url = null }: KafkaProducerResponse =
-        JSON.parse(reply) ?? '';
-      const event = prima.event.create({
-        data: {
-          name,
-          description,
-          code,
-          owner,
-          zipcode,
-          address,
-          streetNumber,
-          category,
-          isFree,
-          isPublic,
-          password,
-          price,
-          privacy,
-          startDay: startDayFormatted,
-          startEnd: startEndFormatted,
-          startTime,
-          endTime,
-          photoUrl: url,
-        },
-      });
-      if ((await event).id) {
-        redis.del('event_code_url', (err, result) => {
-          res.sendStatus(201);
-        });
-      } else {
-        res.sendStatus(400);
-      }
+    // redis.get('event_code_url', async (err, reply) => {
+    //   const { code = null, url = null }: KafkaProducerResponse =
+    //     JSON.parse(reply) ?? '';
+    const event = prima.event.create({
+      data: {
+        name,
+        description,
+        // code,
+        owner,
+        zipcode,
+        address,
+        streetNumber,
+        category,
+        isFree,
+        isPublic,
+        password,
+        price,
+        privacy,
+        startDay: startDayFormatted,
+        startEnd: startEndFormatted,
+        startTime,
+        endTime,
+        // photoUrl: url,
+      },
     });
+    if ((await event).id) {
+      // redis.del('event_code_url', (err, result) => {
+      res.sendStatus(201);
+      // });
+    } else {
+      res.sendStatus(400);
+    }
+    // });
   }
 
   public async findAll(

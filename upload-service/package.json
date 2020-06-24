@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "prod": "NODE_ENV=prod node src/index.js",
+    "start": "NODE_ENV=prod node src/index.js",
     "dev": "NODE_ENV=dev nodemon src/index.js"
   },
   "dependencies": {
@@ -15,8 +15,7 @@
     "mongoose": "^5.9.11",
     "morgan": "^1.10.0",
     "multer": "^1.4.2",
-    "multer-s3": "^2.9.0",
-    "redis": "^3.0.2"
+    "multer-s3": "^2.9.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.3"

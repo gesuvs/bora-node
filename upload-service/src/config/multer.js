@@ -12,23 +12,31 @@ const storageTypes = {
       cb(null, dest);
     },
     filename: (req, file, cb) => {
-      console.log(file)
+      console.log(file);
       crypto.randomBytes(16, (err, hash) => {
         if (err) cb(err);
-        file.key = `${hash.toString("hex")}-${file.originalname.split(" ").join("")}`;
+        file.key = `${hash.toString("hex")}-${file.originalname
+          .split(" ")
+          .join("")}`;
         cb(null, file.key);
       });
     },
   }),
   s3: multerS3({
-    s3: new aws.S3(),
+    s3: new aws.S3({
+      accessKeyId: process.env.AWS_ACCESSS_KEY_ID,
+      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+      region: process.env.AWS_DEFAULT_REGION,
+    }),
     bucket: "borauploads3",
     contentType: multerS3.AUTO_CONTENT_TYPE,
     acl: "public-read",
     key: (req, file, cb) => {
       crypto.randomBytes(16, (err, hash) => {
         if (err) cb(err);
-        const fileName = `${hash.toString("hex")}-${file.originalname.split(" ").join("")}`;
+        const fileName = `${hash.toString("hex")}-${file.originalname
+          .split(" ")
+          .join("")}`;
         cb(null, fileName);
       });
     },

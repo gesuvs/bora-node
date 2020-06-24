@@ -20,25 +20,25 @@ mongoose
     console.log("Conectado");
   });
 
-const kafka = new Kafka({
-  clientId: "api",
-  brokers: ["localhost:9092"],
-  logLevel: logLevel.WARN,
-  retry: {
-    initialRetryTime: 300,
-    retries: 10,
-  },
-});
+// const kafka = new Kafka({
+//   clientId: "api",
+//   brokers: [`${process.env.KAFKA_HOST}:${process.env.KAFKA_PORT}`],
+//   logLevel: logLevel.ERROR,
+//   retry: {
+//     initialRetryTime: 300,
+//     retries: 10,
+//   },
+// });
 
-const producer = kafka.producer();
+// const producer = kafka.producer();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
-app.use((req, res, next) => {
-  req.producer = producer;
-  return next();
-});
+// app.use((req, res, next) => {
+//   req.producer = producer;
+//   return next();
+// });
 app.use(
   "/files",
   express.static(path.resolve(__dirname, "..", "tmp", "uploads"))
@@ -46,9 +46,10 @@ app.use(
 app.use("/upload", routes);
 
 async function run() {
-  await producer.connect();
-  app.listen(process.env.APP_PORT, () => {
-    console.log(`Run: ${process.env.APP_PORT}`);
+  // await producer.connect().then(console.log).catch(console.error);
+  app.listen(process.env.APP_PORT, process.env.HOST, () => {
+    console.log(`Run: ${process.env.HOST}:${process.env.APP_PORT}`);
+    console.log(process.env.AWS_ACCESSS_KEY_ID)
   });
 }
 run().catch(console.error);

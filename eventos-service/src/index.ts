@@ -4,40 +4,47 @@ import express from 'express';
 import routes from './routes';
 import { Kafka } from 'kafkajs';
 import { createClient } from 'redis';
-config();
-
-const kafka = new Kafka({
-  brokers: ['localhost:9092'],
-  clientId: 'upload',
+import { healthcheck } from './routes/healthcheck';
+config({
+  path:
+    process.env.NODE_ENV === 'development'
+      ? '.env.dev'
+      : process.env.NODE_ENV === 'test'
+        ? '.env.test'
+        : '.env',
 });
 
-export const redis = createClient({
-  host: process.env.HOST_REDIS,
-  port: Number(process.env.PORT_REDIS),
-});
+// const kafka = new Kafka({
+//   brokers: [`${process.env.KAFKA_HOST}:${Number(process.env.KAFKA_PORT)}`],
+//   clientId: 'upload',
+// });
 
-const topic = 'issue-upload';
-const consumer = kafka.consumer({ groupId: 'certificate-group' });
+// export const redis = createClient({
+//   host: process.env.REDIS_HOST,
+//   port: Number(process.env.REDIS_PORT),
+// });
+
+// const topic = 'issue-upload';
+// const consumer = kafka.consumer({ groupId: 'certificate-group' });
 const app = express();
 
 app.use(express.json());
-app.use((req, res, next) => {
-  req.consumer = consumer;
-  return next();
-});
+// app.use((req, res, next) => {
+//   req.consumer = consumer;
+//   return next();
+// });
 app.use('/eventos', routes);
-
+app.use(healthcheck);
 async function run() {
-  await consumer.connect();
-  await consumer.subscribe({ topic });
-
-  await consumer.run({
-    eachMessage: async ({ topic, partition, message }) => {
-      redis.set('event_code_url', message.value.toString('utf-8'));
-    },
-  });
+  // await consumer.connect();
+  // await consumer.subscribe({ topic });
+  // await consumer.run({
+  //   eachMessage: async ({ topic, partition, message }) => {
+  //     redis.set('event_code_url', message.value.toString('utf-8'));
+  //   },
+  // });
 }
 run().catch(console.error);
-app.listen(Number(process.env.PORT), process.env.HOST, () => {
-  console.log(`Started on: ${process.env.HOST}:${process.env.PORT}`);
+app.listen(Number(process.env.EVENTO_PORT), process.env.HOST, () => {
+  console.log(`Started on: ${process.env.HOST}:${process.env.EVENTO_PORT}`);
 });
