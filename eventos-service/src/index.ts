@@ -4,14 +4,13 @@ import express from 'express';
 import routes from './routes';
 import { Kafka } from 'kafkajs';
 import { createClient } from 'redis';
-import { healthcheck } from './routes/healthcheck';
 config({
   path:
     process.env.NODE_ENV === 'development'
       ? '.env.dev'
       : process.env.NODE_ENV === 'test'
-        ? '.env.test'
-        : '.env',
+      ? '.env.test'
+      : '.env',
 });
 
 // const kafka = new Kafka({
@@ -34,7 +33,6 @@ app.use(express.json());
 //   return next();
 // });
 app.use('/eventos', routes);
-app.use(healthcheck);
 async function run() {
   // await consumer.connect();
   // await consumer.subscribe({ topic });

@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
 import { parse } from 'date-fns';
 import { PrismaClient, Event } from '@prisma/client';
-import { redis } from '../index';
+// import { redis } from '../index';
 import { KafkaProducerResponse } from 'src/interfaces';
 
-const prima = new PrismaClient();
+const prisma = new PrismaClient();
 export class EventController {
   public async create(req: Request, res: Response): Promise<void> {
     const {
@@ -44,7 +44,7 @@ export class EventController {
     // redis.get('event_code_url', async (err, reply) => {
     //   const { code = null, url = null }: KafkaProducerResponse =
     //     JSON.parse(reply) ?? '';
-    const event = prima.event.create({
+    const event = prisma.event.create({
       data: {
         name,
         description,
@@ -80,10 +80,25 @@ export class EventController {
     req: Request,
     res: Response
   ): Promise<Response<Event[]>> {
-    const events: Event[] = await prima.event.findMany();
+    const events: Event[] = await prisma.event.findMany();
     if (events.length > 0) return res.json(events);
     if (events.length === 0) return res.sendStatus(204);
   }
+
+  public async findEventsByOwner(
+    req: Request,
+    res: Response
+  ): Promise<Response<Event[]>> {
+    const { owner } = req.params;
+    const events: Event[] = await prisma.event.findMany({
+      where: {
+        owner,
+      },
+    });
+    return res.json(events);
+  }
+
+
 
   public async participate(
     req: Request,
@@ -96,7 +111,7 @@ export class EventController {
 
     if (!username) return res.sendStatus(400);
 
-    const existEvent: Event = await prima.event.findOne({
+    const existEvent: Event = await prisma.event.findOne({
       where: {
         id,
       },
@@ -106,7 +121,7 @@ export class EventController {
       res.sendStatus(204);
     }
 
-    const isParticipantEvent = await prima.eventGuest.count({
+    const isParticipantEvent = await prisma.eventGuest.count({
       where: {
         eventFk: existEvent.id,
         AND: {
@@ -116,7 +131,7 @@ export class EventController {
     });
 
     if (isParticipantEvent > 0) return res.sendStatus(401);
-    const participate = await prima.eventGuest.create({
+    const participate = await prisma.eventGuest.create({
       data: {
         Event: {
           connect: {

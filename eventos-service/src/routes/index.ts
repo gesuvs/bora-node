@@ -7,5 +7,6 @@ const routes = Router();
 routes.post('/', event.create);
 routes.get('/', event.findAll);
 routes.post('/:id/participate', event.participate);
+routes.get('/:owner', event.findEventsByOwner);
 
 export default routes;
