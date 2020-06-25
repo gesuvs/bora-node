@@ -8,5 +8,6 @@ routes.post('/', event.create);
 routes.get('/', event.findAll);
 routes.post('/:id/participate', event.participate);
 routes.get('/:owner', event.findEventsByOwner);
+routes.get('/guest/:username', event.findEventsFromGuest);
 
 export default routes;

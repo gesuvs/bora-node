@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { parse } from 'date-fns';
-import { PrismaClient, Event } from '@prisma/client';
+import { PrismaClient, Event, EventGuest, EventClient } from '@prisma/client';
 // import { redis } from '../index';
 import { KafkaProducerResponse } from 'src/interfaces';
 
@@ -80,7 +80,19 @@ export class EventController {
     req: Request,
     res: Response
   ): Promise<Response<Event[]>> {
-    const events: Event[] = await prisma.event.findMany();
+    const { page } = req.query;
+    const limit = 10;
+    const events: Event[] = await prisma.event.findMany({
+      take: limit,
+      skip: isNaN(Number(page))
+        ? 0
+        : Number(page) - 1 === -1
+        ? 0
+        : (Number(page) - 1) * limit,
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
     if (events.length > 0) return res.json(events);
     if (events.length === 0) return res.sendStatus(204);
   }
@@ -97,8 +109,65 @@ export class EventController {
     });
     return res.json(events);
   }
+  public async findEventsFromGuest(
+    req: Request,
+    res: Response
+  ): Promise<Response<Event[]>> {
+    const { username } = req.params;
+    const { name, owner } = req.query ?? undefined;
 
+    const events: EventGuest[] = await prisma.eventGuest.findMany({
+      where: {
+        username,
+      },
+    });
 
+    const eventsFromGuest = events.map(async result => {
+      return await prisma.event.findMany({
+        select: {
+          id: true,
+          code: true,
+          name: true,
+          owner: true,
+          description: true,
+          address: true,
+          zipcode: true,
+          streetNumber: true,
+          category: true,
+          photoUrl: true,
+          endTime: true,
+          startTime: true,
+          startDay: true,
+          startEnd: true,
+          isFree: true,
+          isPublic: true,
+          price: true,
+          privacy: true,
+          password: false,
+        },
+        where: {
+          id: result.eventFk,
+          name: {
+            startsWith:
+              String(name) === 'undefined'
+                ? undefined
+                : String(name).substring(0, 3) ?? undefined,
+            contains: String(name) === 'undefined' ? undefined : String(name),
+          },
+          owner: {
+            contains: String(owner) === 'undefined' ? undefined : String(owner),
+          },
+        },
+      });
+    });
+
+    const response = await Promise.all(eventsFromGuest);
+    if (response.length > 0) {
+      return res.json(response);
+    } else {
+      return res.sendStatus(204);
+    }
+  }
 
   public async participate(
     req: Request,
@@ -118,7 +187,7 @@ export class EventController {
     });
 
     if (!existEvent) {
-      res.sendStatus(204);
+      return res.sendStatus(204);
     }
 
     const isParticipantEvent = await prisma.eventGuest.count({
