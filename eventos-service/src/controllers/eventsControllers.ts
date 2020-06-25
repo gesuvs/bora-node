@@ -6,6 +6,8 @@ import { KafkaProducerResponse } from 'src/interfaces';
 
 const prisma = new PrismaClient();
 export class EventController {
+  limit = 10;
+
   public async create(req: Request, res: Response): Promise<void> {
     const {
       event: {
@@ -81,14 +83,13 @@ export class EventController {
     res: Response
   ): Promise<Response<Event[]>> {
     const { page } = req.query;
-    const limit = 10;
     const events: Event[] = await prisma.event.findMany({
-      take: limit,
+      take: this.limit,
       skip: isNaN(Number(page))
         ? 0
         : Number(page) - 1 === -1
         ? 0
-        : (Number(page) - 1) * limit,
+        : (Number(page) - 1) * this.limit,
       orderBy: {
         createdAt: 'desc',
       },
