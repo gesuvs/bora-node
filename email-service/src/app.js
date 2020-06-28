@@ -18,7 +18,7 @@ const receptedEmail = {
     userAction: 'signUp'
 }
 
-function loadMail (receptedEmail){
+function loadMailTemplate (receptedEmail){
     let template;
     console.log(receptedEmail);
     console.log(userAction);
@@ -36,7 +36,7 @@ function loadMail (receptedEmail){
 async function main (){
     const sender = 'chilenopago1000reaisemfonequebrado@borapp.com'
     
-    let template = await loadMail(receptedEmail);
+    let template = await loadMailTemplate(receptedEmail);
 
     console.log(template);
 
@@ -44,7 +44,8 @@ async function main (){
         from: sender,
         to: receptedEmail.email,
         subject: template.subject,
-        text: template.text
+        text: template.text,
+        html : { path: template.path }
     }
 
     transport.sendMail(emailSend , (err , info)=>{
