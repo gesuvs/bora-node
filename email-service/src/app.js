@@ -15,38 +15,40 @@ const transport = nodemailer.createTransport({
 const receptedEmail = {
     username: 'willzera',
     email: 'sancheswillian2008@gmail.com',
-    userAction: 'signUp'
+    userAction: 'rememberPass'
 }
 
 function loadMailTemplate (receptedEmail){
     let template;
-    console.log(receptedEmail);
-    console.log(userAction);
     if(receptedEmail.userAction === userAction.signUp ){
-        console.log("signUp")
         template = userTemplate.signUp;
         return template;
     }else if(receptedEmail.userAction === userAction.rememberPass){
-        console.log("rememberPass")
+       
         template = userTemplate.rememberPass;
         return template;
     }
 }
 
 async function main (){
+
     const sender = 'chilenopago1000reaisemfonequebrado@borapp.com'
     
-    let template = await loadMailTemplate(receptedEmail);
+    let template = loadMailTemplate(receptedEmail);
 
-    console.log(template);
+    console.log(template); 
 
     let emailSend = {
         from: sender,
         to: receptedEmail.email,
         subject: template.subject,
         text: template.text,
-        html : { path: template.path }
+        /*html : { path: template.path } */
     }
+
+    console.log(emailSend)
+
+
 
     transport.sendMail(emailSend , (err , info)=>{
         console.log(info);

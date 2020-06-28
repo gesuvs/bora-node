@@ -3,5 +3,5 @@ const userAction = {
     rememberPass: 'rememberPass'
 }
 
-module.exports = {userAction};
+module.exports = userAction;
 
