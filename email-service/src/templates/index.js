@@ -1,13 +1,13 @@
 const signUp = {
-    subject: 'Borapp: Seja bem vindo ao nosso aplicativo! Bora criar seu primeiro evento?',
+    subject: 'Seja bem vindo ao BoraApp!',
     text: '',
-    path: 'html/newUser.html'
+    path: 'src/html/newUser.html'
 }
 
 const rememberPass = {
-    subject: 'Borapp: Relembrando sua senha',
+    subject: 'Borapp: Reset de senha',
     text: '',
-    path: 'html/rememberPass.html'
+    path: 'src/html/rememberPass.html'
 }
 
 module.exports = {signUp , rememberPass};
