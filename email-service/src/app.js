@@ -15,7 +15,7 @@ const transport = nodemailer.createTransport({
 const receptedEmail = {
     username: 'willzera',
     email: 'sancheswillian2008@gmail.com',
-    userAction: 'rememberPass'
+    userAction: 'signUp'
 }
 
 function loadMailTemplate (receptedEmail){
