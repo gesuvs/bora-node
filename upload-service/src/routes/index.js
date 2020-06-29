@@ -5,12 +5,6 @@ const User = require("../documents/User");
 const Event = require("../documents/Event");
 const { CompressionTypes } = require("kafkajs");
 
-routes.get("/healthcheck", (req, res) =>
-  res.json({
-    healthcheck: "up",
-  })
-);
-
 routes.post(
   "/save/user",
   multer(multerConfig).single("file"),
@@ -30,22 +24,22 @@ routes.post(
       url,
     });
 
-    // const message = {
-    //   code,
-    //   url: user.url,
-    // };
+    const message = {
+      code,
+      url: user.url,
+    };
 
-    // await req.producer.send({
-    //   topic: "issue-upload",
-    //   compression: CompressionTypes.GZIP,
-    //   messages: [
-    //     {
-    //       value: JSON.stringify(message),
-    //     },
-    //   ],
-    // });
+    await req.producer.send({
+      topic: "issue-upload",
+      compression: CompressionTypes.GZIP,
+      messages: [
+        {
+          value: JSON.stringify(message),
+        },
+      ],
+    });
 
-    // await req.producer.disconnect();
+    await req.producer.disconnect();
 
     res.json(user);
   }
