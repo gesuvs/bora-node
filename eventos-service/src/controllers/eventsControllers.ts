@@ -1,13 +1,12 @@
 import { Request, Response } from 'express';
 import { parse } from 'date-fns';
-import { PrismaClient, Event, EventGuest, EventClient } from '@prisma/client';
-// import { redis } from '../index';
+import { PrismaClient, Event, EventGuest } from '@prisma/client';
+import { redis } from '../index';
 import { KafkaProducerResponse } from 'src/interfaces';
 
 const prisma = new PrismaClient();
+const limit = 10;
 export class EventController {
-  limit = 10;
-
   public async create(req: Request, res: Response): Promise<void> {
     const {
       event: {
@@ -43,39 +42,39 @@ export class EventController {
     const startDayFormatted = parse(startDay, 'dd/MM/yyyy', new Date());
     const startEndFormatted = parse(startEnd, 'dd/MM/yyyy', new Date());
 
-    // redis.get('event_code_url', async (err, reply) => {
-    //   const { code = null, url = null }: KafkaProducerResponse =
-    //     JSON.parse(reply) ?? '';
-    const event = prisma.event.create({
-      data: {
-        name,
-        description,
-        // code,
-        owner,
-        zipcode,
-        address,
-        streetNumber,
-        category,
-        isFree,
-        isPublic,
-        password,
-        price,
-        privacy,
-        startDay: startDayFormatted,
-        startEnd: startEndFormatted,
-        startTime,
-        endTime,
-        // photoUrl: url,
-      },
+    redis.get('event_code_url', async (err, reply) => {
+      const { code = null, url = null }: KafkaProducerResponse =
+        JSON.parse(reply) ?? '';
+      const event = prisma.event.create({
+        data: {
+          name,
+          description,
+          code,
+          owner,
+          zipcode,
+          address,
+          streetNumber,
+          category,
+          isFree,
+          isPublic,
+          password,
+          price,
+          privacy,
+          startDay: startDayFormatted,
+          startEnd: startEndFormatted,
+          startTime,
+          endTime,
+          photoUrl: url,
+        },
+      });
+      if ((await event).id) {
+        redis.del('event_code_url', (err, result) => {
+          res.sendStatus(201);
+        });
+      } else {
+        res.sendStatus(400);
+      }
     });
-    if ((await event).id) {
-      // redis.del('event_code_url', (err, result) => {
-      res.sendStatus(201);
-      // });
-    } else {
-      res.sendStatus(400);
-    }
-    // });
   }
 
   public async findAll(
@@ -83,13 +82,14 @@ export class EventController {
     res: Response
   ): Promise<Response<Event[]>> {
     const { page } = req.query;
+
     const events: Event[] = await prisma.event.findMany({
-      take: this.limit,
+      take: limit,
       skip: isNaN(Number(page))
         ? 0
         : Number(page) - 1 === -1
         ? 0
-        : (Number(page) - 1) * this.limit,
+        : (Number(page) - 1) * limit,
       orderBy: {
         createdAt: 'desc',
       },
