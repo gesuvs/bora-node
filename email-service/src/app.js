@@ -1,6 +1,13 @@
 const nodemailer = require('nodemailer');
 const userAction = require("./enum/index");
 const userTemplate = require("./templates/index");
+const receptedEmail = {
+    username: 'teste',
+    email: 'sancheswillian2008@gmail.com',
+    userAction: 'signUp' 
+}
+
+module.exports = receptedEmail.username;
 
 const transport = nodemailer.createTransport({
     host: 'smtp.mailtrap.io',
@@ -12,11 +19,8 @@ const transport = nodemailer.createTransport({
     pass: '91db26ce8579f3' }
 });
 
-const receptedEmail = {
-    username: 'willzera',
-    email: 'sancheswillian2008@gmail.com',
-    userAction: 'signUp'
-}
+
+
 
 function loadMailTemplate (receptedEmail){
     let template;
@@ -30,16 +34,17 @@ function loadMailTemplate (receptedEmail){
 }
 
 async function main (){
-
     const sender = 'chilenopago1000reaisemfonequebrado@borapp.com'
     let template = loadMailTemplate(receptedEmail);
+
+    console.log(template)
 
     let emailSend = {
         from: sender,
         to: receptedEmail.email,
         subject: template.subject,
         text: template.text,
-        html : { path: template.path }
+        html : template.html
     }
 
     console.log(emailSend)
