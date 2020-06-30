@@ -4,18 +4,23 @@ import { newUser, resendAcces } from "./enum";
 
 let template;
 
+const sender = "borapp@borapp.com";
+
 const dados = {
   to: "wil@wil.com",
   action: "new-user",
   username: "wil",
-};
+  subject: ""
+}; 
 
 switch (dados.action) {
   case "resend-access":
     template = compile(resendAcces);
+    dados.subject = 'Borapp: Reset de Senha'
     break;
   case "new-user":
     template = compile(newUser);
+    dados.subject = 'Borapp: Seja bem vindo ao aplicativo BORA'
   default:
     break;
 }
@@ -32,8 +37,8 @@ const transport = nodemailer.createTransport({
 });
 
 transport.sendMail({
-  to: "teste@teste.com",
-  from: "teste@teste.com",
-  subject: "teste",
+  to: dados.to,
+  from: sender,
+  subject: dados.subject,
   html: template(dados),
 });
