@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+  postgres:
+    image: postgres:11
+    container_name: pg
+    restart: always
+    environment:
+      POSTGRES_USER: gesuvs
+      POSTGRES_PASSWORD: gesuvs
+      POSTGRES_DB: bora
+    ports:
+      - 5432:5432
+    volumes:
+      - /var/lib/postgresql/data
