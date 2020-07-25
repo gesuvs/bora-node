@@ -1,0 +1,31 @@
+Arguments: 
+  /home/gesuvs/.nvm/versions/node/v12.16.1/bin/node /home/gesuvs/.yarn/releases/yarn-1.22.4.js init -y
+
+PATH: 
+  /home/gesuvs/anaconda3/bin:/home/gesuvs/anaconda3/condabin:/home/gesuvs/bin:/opt/maven/bin:/home/gesuvs/.cargo/bin:/home/gesuvs/.deno/bin:/home/gesuvs/.rbenv/shims:/home/gesuvs/.rbenv/bin:/home/gesuvs/.nvm/versions/node/v12.16.1/bin:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:/home/gesuvs/.zinit/polaris/bin:/home/gesuvs/.cargo/bin:/home/gesuvs/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
+
+Yarn version: 
+  1.22.4
+
+Node version: 
+  12.16.1
+
+Platform: 
+  linux x64
+
+Trace: 
+  SyntaxError: /home/gesuvs/Documents/Guilherme/Projetos/bora-node/package.json: Unexpected token : in JSON at position 87
+      at JSON.parse (<anonymous>)
+      at /home/gesuvs/.yarn/releases/yarn-1.22.4.js:1098:57
+      at Generator.next (<anonymous>)
+      at step (/home/gesuvs/.yarn/releases/yarn-1.22.4.js:310:30)
+      at /home/gesuvs/.yarn/releases/yarn-1.22.4.js:321:13
+
+npm manifest: 
+  No manifest
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

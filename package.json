@@ -1,0 +1,25 @@
+{
+  "name": "bora",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts":{
+    "test": "jest"
+  },
+  "private": "true",
+  "workspaces": {
+    "packages": [
+      "packages/*",
+      "packages/shared/*"
+    ]
+  },
+  "repository": "git@github.com:GBernardo10/bora-node.git",
+  "author": "GBernardo10 <g_bernardo10@hotmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@bora/eslint": "*",
+    "@types/jest": "^26.0.7",
+    "jest": "^26.1.0",
+    "ts-jest": "^26.1.3",
+    "typescript": "^3.9.7"
+  }
+}
