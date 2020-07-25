@@ -1,1 +1,8 @@
 .vscode
+tls/*.pem
+tls/*.srl
+tls/*.key
+tls/*.key.pub
+.env.prod
+token-docker-machine
+node_modules

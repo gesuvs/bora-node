@@ -1,0 +1,156 @@
+version: "3.3"
+
+networks:
+  proxy:
+    external: true
+
+services:
+  postgres:
+    image: postgres:11
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.role == manager]
+    networks:
+      - proxy
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      PG_DATA: /var/lib/postgresql/data/pgdata
+      POSTGRES_DB: ${POSTGRES_DB}
+    healthcheck:
+      interval: 10s
+      timeout: 2s
+      retries: 10
+    ports:
+      - 5432:5432
+    volumes:
+      - /var/lib/postgresql/data
+  redis:
+    image: redis:alpine
+    networks:
+      - proxy
+    ports:
+      - 6379:6379
+  zookeeper:
+    image: wurstmeister/zookeeper:latest
+    networks:
+      - proxy
+    ports:
+      - 2181:2181
+  kafka:
+    image: wurstmeister/kafka:2.11-1.1.0
+    networks:
+      - proxy
+    depends_on:
+      - zookeeper
+    ports:
+      - 9092:9092
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: kafka
+      KAFKA_ADVERTISED_PORT: 9092
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_CREATE_TOPICS: "issue-upload:1:1,upload-response:1:1"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+  gateway:
+    image: gesuvs/gateway
+    environment:
+      USER_SERVICE: ${USER_SERVICE}
+      EVENTO_SERVICE: ${EVENTO_SERVICE}
+      PAYMENT_SERVICE: ${PAYMENT_SERVICE}
+      USER_PORT: ${USER_PORT}
+      EVENTO_PORT: ${EVENTO_PORT}
+      PAY_PORT: ${PAY_PORT}
+    networks:
+      - proxy
+    deploy:
+      labels:
+        - traefik.frontend.rule=PathPrefixStrip:/api
+        - traefik.docker.network=proxy
+        - traefik.port=7777
+        - traefik.enable=true
+  bora-user:
+    image: gesuvs/user
+    networks:
+      - proxy
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      HOST: ${HOST}
+      USER_PORT: ${USER_PORT}
+      POSTGRES_HOST: ${POSTGRES_HOST}
+      POSTGRES_PORT: ${POSTGRES_PORT}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      REDIS_HOST: ${REDIS_HOST}
+      REDIS_PORT: ${REDIS_PORT}
+    ports:
+      - ${USER_PORT}:${USER_PORT}
+    command: >
+      sh -c "pm2-runtime dist/main.js"
+  bora-evento:
+    image: gesuvs/eventos
+    networks:
+      - proxy
+    depends_on:
+      - postgres
+      - bora-upload
+      - kafka
+      - redis
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      EVENTO_PORT: ${EVENTO_PORT}
+      HOST: ${HOST}
+      REDIS_HOST: ${REDIS_HOST}
+      REDIS_PORT: ${REDIS_PORT}
+      KAFKA_HOST: ${KAFKA_HOST}
+      KAFKA_PORT: ${KAFKA_PORT}
+    ports:
+      - ${EVENTO_PORT}:${EVENTO_PORT}
+    command: >
+      sh -c "pm2-runtime index.js"
+  bora-payment:
+    image: gesuvs/payment
+    networks:
+      - proxy
+    depends_on:
+      - postgres
+    environment:
+      NODE_ENV: production
+      HOST: ${HOST}
+      PAY_PORT: ${PAY_PORT}
+      POSTGRES_HOST: ${POSTGRES_HOST}
+      POSTGRES_PORT: ${POSTGRES_PORT}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - ${PAY_PORT}:${PAY_PORT}
+    command: >
+      sh -c "pm2-runtime dist/main.js"
+  bora-upload:
+    image: gesuvs/upload
+    networks:
+      - proxy
+    depends_on:
+      - postgres
+      - kafka
+    environment:
+      HOST: ${HOST}
+      UPLOAD_PORT: ${UPLOAD_PORT}
+      MONGO_URL: ${MONGO_URL}
+      STORAGE_TYPE: ${STORAGE_TYPE}
+      KAFKA_HOST: ${KAFKA_HOST}
+      KAFKA_PORT: ${KAFKA_PORT}
+      AWS_ACCESSS_KEY_ID: ${AWS_ACCESSS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_DEFAULT_REGION: ${AWS_DEFAULT_REGION}
+    healthcheck:
+      interval: 10s
+      timeout: 2s
+      retries: 10
+    ports:
+      - ${UPLOAD_PORT}:${UPLOAD_PORT}
