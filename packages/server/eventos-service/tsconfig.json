@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "lib": ["es7",],
+    "target": "ES2017",
+    "rootDir": "./src",
+    "esModuleInterop": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "outDir": "./dist",
+    "allowJs": true,
+    "removeComments": true,
+    "resolveJsonModule": true,
+    "baseUrl": ".",
+    "noImplicitAny": false,
+    "declarationMap": true,
+    "inlineSources": true,
+    "sourceMap": true,
+    "typeRoots": ["./node_modules/@types", "./src/@types"],
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "declaration": true,
+    "skipLibCheck": true,
+    "paths": {
+      "@controllers/*": ["./src/controllers/*"],
+      "@types/*": ["./src/@types/*"]
+    }
+  },
+  "include": ["src/**/*"]
+}
