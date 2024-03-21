@@ -29,7 +29,7 @@
     "reflect-metadata": "^0.1.10",
     "rxjs": "^6.5.5",
     "tsconfig-paths": "^3.9.0",
-    "typeorm": "0.2.25"
+    "typeorm": "0.3.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.1",
